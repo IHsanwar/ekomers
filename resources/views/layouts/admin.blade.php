@@ -15,13 +15,14 @@
         <div class="w-64 bg-white shadow min-h-screen p-4">
             <h1 class="text-xl font-bold text-blue-600 mb-6">Admin Panel</h1>
             <ul class="space-y-2">
-                <li><a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded">Dashboard</a></li>
-                <li><a href="{{ route('admin.categories.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded">Kategori</a></li>
-                <li><a href="{{ route('admin.products.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded">Produk</a></li>
+                <li><a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+                <li><a href="{{ route('admin.categories.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded"><i class="fa-solid fa-layer-group"></i> Kategori</a></li>
+                <li><a href="{{ route('admin.products.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded"><i class="fa-solid fa-box"></i> Produk</a></li>
+                <li><a href="{{ route('product.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 rounded"><i class="fa-solid fa-home"></i> Home</a></li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
-                        <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded">Logout</button>
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
                     </form>
                 </li>
             </ul>

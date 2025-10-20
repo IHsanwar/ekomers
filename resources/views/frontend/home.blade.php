@@ -7,11 +7,15 @@
         <h2 class="text-2xl font-bold mb-4 text-gray-800">Kategori Produk</h2>
         <div class="flex flex-wrap gap-3">
             @foreach($categories as $category)
-                <a href="#"
+                <a href= "{{ route('product.index', ['category' => $category->id]) }}"
                    class="px-4 py-2 bg-white border-2 border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:border-blue-500 hover:text-blue-600 transition-all duration-200">
                     {{ $category->name }}
                 </a>
             @endforeach
+            <a href="{{ route('product.index') }}"
+               class="px-4 py-2 bg-white border-2 border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:border-blue-500 hover:text-blue-600 transition-all duration-200">
+                Semua Kategori
+            </a>
         </div>
     </div>
 

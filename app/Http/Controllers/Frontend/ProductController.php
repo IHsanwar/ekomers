@@ -8,12 +8,21 @@ use App\Models\Product;
 use App\Models\Category;
 class ProductController extends Controller
 {
- public function index()
-    {
-        $products = Product::with('category')->get();
-        $categories = Category::all();
-        return view('frontend.home', compact('products', 'categories'));
+ public function index(Request $request)
+{
+    $query = Product::query()->with('category');
+
+    // Jika kategori dipilih
+    if ($request->has('category') && $request->category) {
+        $query->where('category_id', $request->category);
     }
+
+    $products = $query->where('is_active', true)->latest()->get();
+    $categories = Category::all();
+
+    return view('frontend.home', compact('products', 'categories'));
+}
+
 
     /**
      * Show the form for creating a new resource.

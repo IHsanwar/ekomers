@@ -28,5 +28,24 @@ class Transaction extends Model
             $transaction->invoice_code = "INV-{$datePart}-{$invoiceNumber}";
         });
     }
+     protected $casts = [
+        'total_amount' => 'decimal:2',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+
+    // Scope untuk status
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', 'completed');
+    }
 
 }

@@ -42,6 +42,9 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
         Route::post('/products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggle-active');
-    });
+            }); 
+        Route::post('/transactions/{transaction}/{status}', [DashboardController::class, 'updateStatus'])
+             ->name('transactions.update-status');
+        
 
 require __DIR__.'/auth.php';

@@ -33,7 +33,7 @@ public function store(Request $request)
         'category_id' => 'required|exists:categories,id',
         'price' => 'required|numeric|min:0',
         'description' => 'required',
-        'whatsapp_link' => 'sometimes|url',
+        'whatsapp_link' => 'nullable|url',
         'quantity' => 'required|integer|min:0',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'images' => 'nullable|array',
@@ -82,47 +82,56 @@ public function store(Request $request)
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    public function update(Request $request, Product $product)
-    {
-        $request->validate([
-            'name' => 'required',
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric|min:0',
-            'description' => 'required',
-            'whatsapp_link' => 'required|url',
-            'image_url' => 'nullable|url',
-            'images' => 'nullable|array',
-            'images.*' => 'nullable|url',
-        ]);
+    
+public function update(Request $request, Product $product)
+{
+    $request->validate([
+        'name' => 'required',
+        'category_id' => 'required|exists:categories,id',
+        'price' => 'required|numeric|min:0',
+        'description' => 'required',
+        'whatsapp_link' => 'nullable|url',
+        'quantity' => 'required|integer|min:0',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'images' => 'nullable|string',
+    ]);
 
-        $product->update([
-            'category_id' => $request->category_id,
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'description' => $request->description,
-            'price' => $request->price,
-            'whatsapp_link' => $request->whatsapp_link,
-            'image_url' => $request->image_url,
-            'is_active' => $request->has('is_active'),
-        ]);
+    // Handle upload gambar utama
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('products', 'public');
+        $product->image_url = '/storage/' . $imagePath;
+    }
 
-        // Hapus gambar lama (opsional: bisa simpan jika ingin edit)
-        $product->images()->delete();
+    $product->update([
+        'category_id' => $request->category_id,
+        'name' => $request->name,
+        'slug' => Str::slug($request->name),
+        'description' => $request->description,
+        'price' => $request->price,
+        'whatsapp_link' => $request->whatsapp_link,
+        'is_active' => $request->has('is_active'),
+        'quantity' => $request->quantity,
+    ]);
 
-        if ($request->filled('images')) {
-            foreach ($request->images as $i => $url) {
-                if (filter_var($url, FILTER_VALIDATE_URL)) {
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image_url' => $url,
-                        'position' => $i,
-                    ]);
-                }
+    // Hapus gambar lama dan tambahkan baru jika ada input
+    $product->images()->delete();
+
+    if ($request->filled('images')) {
+        $urls = array_filter(array_map('trim', explode("\n", $request->images)));
+
+        foreach ($urls as $i => $url) {
+            if (filter_var($url, FILTER_VALIDATE_URL)) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_url' => $url,
+                    'position' => $i,
+                ]);
             }
         }
-
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui.');
     }
+
+    return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui.');
+}
 
     public function destroy(Product $product)
     {

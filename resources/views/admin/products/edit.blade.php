@@ -67,9 +67,10 @@
 
             <div class="mb-4">
                 <label class="block text-gray-700 mb-2">Galeri Gambar (URL, satu per baris)</label>
-                <textarea name="images[]" rows="4" class="w-full border rounded px-3 py-2" placeholder="https://example.com/img1.jpg&#10;https://example.com/img2.jpg">{{ 
-                    $product ? implode("\n", $product->images->pluck('image_url')->toArray()) : old('images.*')
+                <textarea name="images" rows="4" class="w-full border rounded px-3 py-2" placeholder="https://example.com/img1.jpg&#10;https://example.com/img2.jpg">{{ 
+                    $product ? implode("\n", $product->images->pluck('image_url')->toArray()) : old('images')
                 }}</textarea>
+                
                 <p class="text-sm text-gray-500 mt-1">Pisahkan tiap URL dengan baris baru (enter)</p>
             </div>
         </div>

@@ -17,7 +17,8 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return view('admin.categories.create');
+        $category = null;
+        return view('admin.categories.create', compact('category'));
     }
 
     public function store(Request $request)

@@ -15,9 +15,46 @@
             <a href="{{ route('home') }}" class="text-xl font-bold text-blue-600">ShopKu</a>
             <div>
                 @auth
-                <a href="{{ route('cart.index') }}" class="text-sm text-gray-600 hover:text-blue-600 mr-4"><i class="fa-solid fa-cart-shopping"></i></a>
-                    <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-600 hover:text-blue-600">Admin</a>
-                @endauth
+    <div class="flex items-center space-x-4">
+        {{--  Cart --}}
+        <a href="{{ route('cart.index') }}" 
+           class="text-sm text-gray-600 hover:text-blue-600 flex items-center">
+            <i class="fa-solid fa-cart-shopping mr-1"></i> Cart
+        </a>
+
+        {{--  Admin /  User Profile --}}
+        @if(auth()->user()->role === 'admin')
+            <a href="{{ route('admin.dashboard') }}" 
+               class="text-sm text-gray-600 hover:text-blue-600 flex items-center">
+                <i class="fa-solid fa-gauge mr-1"></i> Admin
+            </a>
+        @else
+            <a href="{{ route('profile.edit', auth()->user()->id) }}" 
+               class="text-sm text-gray-600 hover:text-blue-600 flex items-center">
+                <i class="fa-solid fa-user mr-1"></i> {{ auth()->user()->name }}
+            </a>
+        @endif
+
+        {{--  Logout --}}
+        <form action="{{ route('logout') }}" method="POST" class="inline">
+            @csrf
+            <button type="submit" 
+                    class="text-sm text-gray-600 hover:text-red-600 flex items-center">
+                <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+            </button>
+        </form>
+    </div>
+@endauth
+
+@guest
+    {{-- Jika belum login --}}
+    <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-blue-600 flex items-center">
+        <i class="fa-solid fa-right-to-bracket mr-1"></i> Login
+    </a>
+@endguest
+
+
+
             </div>
         </div>
     </nav>
