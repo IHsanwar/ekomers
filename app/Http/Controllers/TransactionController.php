@@ -23,28 +23,14 @@ class TransactionController extends Controller
     ]);
 
     $totalAmount = 0;
+
     foreach ($request->items as $item) {
-        $product = Product::find($item['product_id']);
+        $product = Product::findOrFail($item['product_id']);
         $totalAmount += $product->price * $item['quantity'];
     }
 
-    // 🔒 Buat invoice code yang benar-benar unik
-    $invoiceCode = null;
-    $maxAttempts = 10;
-
-    for ($i = 0; $i < $maxAttempts; $i++) {
-        // Tambahkan microtime + random string biar benar-benar unik
-        $candidate = 'INV-' . now()->format('Ymd') . '-' . strtoupper(Str::random(3)) . '-' . substr(md5(microtime(true) . Str::random(8)), 0, 5);
-
-        if (!Transaction::where('invoice_code', $candidate)->exists()) {
-            $invoiceCode = $candidate;
-            break;
-        }
-    }
-
-    if (!$invoiceCode) {
-        return back()->withErrors(['invoice' => 'Gagal membuat kode invoice unik. Silakan coba lagi.']);
-    }
+    // invoice unik
+    $invoiceCode = 'INV-' . now()->format('YmdHis') . '-' . strtoupper(Str::random(6));
 
     DB::beginTransaction();
     try {
@@ -56,19 +42,10 @@ class TransactionController extends Controller
         ]);
 
         foreach ($request->items as $item) {
-            $product = Product::find($item['product_id']);
-
-            if ($product->quantity < $item['quantity']) {
-                DB::rollBack();
-                return back()->withErrors([
-                    'quantity' => "Stok untuk {$product->name} tidak mencukupi.",
-                ]);
-            }
-
-            $product->quantity -= $item['quantity'];
-            $product->save();
+            $product = Product::findOrFail($item['product_id']);
 
             TransactionItems::create([
+                'payment_method' => 'midtrans',
                 'transaction_id' => $transaction->id,
                 'product_id' => $product->id,
                 'quantity' => $item['quantity'],
@@ -76,18 +53,14 @@ class TransactionController extends Controller
             ]);
         }
 
-        Cart::where('user_id', auth()->id())->delete();
-
         DB::commit();
 
-        return redirect()
-            ->route('checkout.success', ['id' => $transaction->id])
-            ->with('success', 'Transaksi berhasil diproses!');
+        return redirect()->route('payment.pay', $transaction->id);
 
     } catch (\Exception $e) {
         DB::rollBack();
-        \Log::error('Checkout error: ' . $e->getMessage());
-        return back()->withErrors(['system' => 'Terjadi kesalahan sistem. Silakan coba lagi.']);
+        \Log::error($e->getMessage());
+        return response()->json(['error' => 'Checkout failed'], 500);
     }
 }
 
@@ -97,6 +70,7 @@ class TransactionController extends Controller
         $cartItems = Cart::where('user_id', auth()->id())
             ->with('product')
             ->get();
+            
 
         return view('frontend.checkout', compact('cartItems'));
     }
@@ -106,14 +80,18 @@ class TransactionController extends Controller
     $startDate = $request->input('start_date', Carbon::now()->startOfMonth()->toDateString());
     $endDate = $request->input('end_date', Carbon::now()->endOfMonth()->toDateString());
 
-    $transactions = \App\Models\Transaction::with('user')
+    $transactions = Transaction::with('user')
         ->whereBetween('created_at', [$startDate, $endDate])
         ->orderBy('created_at', 'desc')
         ->get();
 
     $totalRevenue = $transactions->sum('total_amount');
-
-    $pdf = Pdf::loadView('admin.transactions.report', compact('transactions', 'totalRevenue', 'startDate', 'endDate'))
+    $totalRevenueMonthly = $transactions->groupBy(function($transaction) {
+        return Carbon::parse($transaction->created_at)->format('Y-m');
+    })->map(function($group) {
+        return $group->sum('total_amount');
+    });
+    $pdf = Pdf::loadView('admin.transactions.report', compact('transactions', 'totalRevenue', 'totalRevenueMonthly', 'startDate', 'endDate'))
               ->setPaper('A4', 'portrait');
 
     return $pdf->download("laporan-transaksi-$startDate-$endDate.pdf");

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transaction Reports | Arkari Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF6B00", // Vibrant Orange
+              secondary: "#22C55E", // Success Green
+              "background-light": "#F8FAFC",
+              "background-dark": "#0F172A",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#1E293B",
+            },
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+              display: ["Outfit", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem",
+              'xl': '1rem',
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      .anime-glow {
+        box-shadow: 0 0 15px rgba(255, 107, 0, 0.2);
+      }
+      .dark .anime-glow {
+        box-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+      .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #334155;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-light dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 hidden lg:flex flex-col z-50">
+<div class="p-6">
+<img alt="Arkari Design Logo" class="h-12 w-auto object-contain dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDphYj6Kxea89AHMAtDB4P9sHsnpL5EXIBTVAtjKsHnSp3y2NHLeAtNzoRdN1Evf_MDTMEx_LX9Y6aPpDGG8m0PskXWeK_aBc5EhMkLTNTi26BJ7LRsSyjgqJdVP05BQZc1w9wmtCyff4nuqbeQYK9kbyh4BDldPUz26f_pbiY9tWfX3o_pOt5K2y3ZmgivW8CnHVUZZgdOkw-rLpG3CyBdUYvTz5L0Sj2Ro9s6uA1rf0qfoKZPnu27y8TVQsCsrTTa53fEexxHC1A"/>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg transition-all" href="#">
+<span class="material-icons-round">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg transition-all" href="#">
+<span class="material-icons-round">inventory_2</span>
+<span class="font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-lg transition-all" href="#">
+<span class="material-icons-round">receipt_long</span>
+<span class="font-medium">Transactions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg transition-all" href="#">
+<span class="material-icons-round">people</span>
+<span class="font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg transition-all" href="#">
+<span class="material-icons-round">analytics</span>
+<span class="font-medium">Analytics</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">A</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-semibold truncate">Admin Arkari</p>
+<p class="text-xs text-slate-500 truncate">Store Manager</p>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-round text-lg">settings</span>
+</button>
+</div>
+</div>
+</aside>
+<main class="lg:ml-64 p-4 lg:p-8 min-h-screen">
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h1 class="text-3xl font-bold font-display tracking-tight">Transaction Reports</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Review and manage all incoming store revenue.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-lg font-semibold hover:border-primary transition-all">
+<span class="material-icons-round text-lg">file_download</span>
+                    Export CSV
+                </button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg font-semibold hover:opacity-90 transition-all anime-glow">
+<span class="material-icons-round text-lg">add</span>
+                    New Invoice
+                </button>
+</div>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="p-6 bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary/10 text-secondary rounded-lg">
+<span class="material-icons-round">payments</span>
+</div>
+<span class="text-xs font-bold text-secondary bg-secondary/10 px-2 py-1 rounded-full">+12.5%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Revenue</p>
+<p class="text-2xl font-bold font-display mt-1">$45,280.00</p>
+</div>
+<div class="p-6 bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 text-primary rounded-lg">
+<span class="material-icons-round">shopping_cart</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">+4.2%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Monthly Orders</p>
+<p class="text-2xl font-bold font-display mt-1">1,248</p>
+</div>
+<div class="p-6 bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-500/10 text-blue-500 rounded-lg">
+<span class="material-icons-round">trending_up</span>
+</div>
+<span class="text-xs font-bold text-blue-500 bg-blue-500/10 px-2 py-1 rounded-full">Active</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Average Order Value</p>
+<p class="text-2xl font-bold font-display mt-1">$124.50</p>
+</div>
+</div>
+<section class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+<div class="p-4 lg:p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-4 items-center justify-between">
+<div class="flex items-center gap-3 w-full md:w-auto">
+<div class="relative flex-1 md:w-64">
+<span class="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm" placeholder="Search orders..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-900 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons-round text-lg">filter_list</span>
+                        Filters
+                    </button>
+</div>
+<div class="flex items-center gap-2 w-full md:w-auto">
+<div class="flex bg-slate-50 dark:bg-slate-900 p-1 rounded-lg">
+<button class="px-4 py-1.5 bg-white dark:bg-surface-dark shadow-sm rounded-md text-sm font-semibold">Weekly</button>
+<button class="px-4 py-1.5 text-slate-500 dark:text-slate-400 text-sm font-semibold hover:text-primary">Monthly</button>
+<button class="px-4 py-1.5 text-slate-500 dark:text-slate-400 text-sm font-semibold hover:text-primary">Yearly</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Order ID</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Customer</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Date</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Amount</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Status</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ARK-9281</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex-shrink-0">
+<img alt="Avatar" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHOzOA5sksNwcZqWnvMm-EoIqOVwAqOUxocn7ZVrOaQFv7olKSbyamcwuoC0AWiFIch9TqgOLCVjE_olUdj3e9hCVrhLHoLXr7CoxOFc2pqXVskHhpTTti5BT4UYD2_xC7kht53daLYEz4wNsYYMRc4vm-LViA-3Unch7z06S-oMLz-F4C8ntglC-iZVyL2C0ALeNtYYdEO4b-Y-lVth53ZC-owd36O-hjoNdChZABta7f2E-k77uh6uEoEfsQHsAx7qGKkXk-DnY"/>
+</div>
+<span class="font-medium">Haruto Takahashi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Oct 24, 2023, 10:24 AM</td>
+<td class="px-6 py-4 font-semibold">$342.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mr-2"></span>
+                                    Paid
+                                </span>
+</td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons-round text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ARK-9280</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex-shrink-0">
+<img alt="Avatar" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0QCIJW7gRDX1AKgQZr7MinKvvuQqNj5lcUUHekXBYlzStDPW2CTrRCALtG3EpsJSsGru6NzEl7k013THfom4KipQKdsyPN4m73HQhcSLALtQa6aFVKTzAmjnD1oq9BmvWny3QJzIZ5HdX74EaWiuwXH7fnRhd0G9WNlA6Qo-apML70pA0PMcirXp2B9vVYxMeVgG_4god0rhZ98a_Bf9Xb9KloIvNnc5esy7cLgjkwtOg24ev60Dd0UHBUJphViJYt28MVzXrTDE"/>
+</div>
+<span class="font-medium">Yuki Nakamura</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Oct 24, 2023, 09:12 AM</td>
+<td class="px-6 py-4 font-semibold">$1,250.50</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mr-2"></span>
+                                    Pending
+                                </span>
+</td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons-round text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ARK-9279</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex-shrink-0">
+<img alt="Avatar" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV726kCPW0RSpkBWS72Rp05sTVjhCZvI6hZkVJQW2HI5WVcYhutUcNDHCCHeOvpFVyS2AAJ959pmf9alWOOQ7CisvfGmNUU2LCbzvJNt3a1q9uy8HBTPpBjstjiO6xDJsw8bHXobWm4bA7ao9pG5oGJXHwQoGuKzF6mljnkBfUgqWA0x7-2pYrUON4dhedbphp8U2sWdAThn22qUWltQ_8qYG9viKDASz4ft8R_1nDs89BNm9if6NrzfvEEYxN7JNj5FAb795wZuc"/>
+</div>
+<span class="font-medium">Ren Suzuki</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Oct 23, 2023, 05:45 PM</td>
+<td class="px-6 py-4 font-semibold">$89.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-blue-500">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2"></span>
+                                    Shipped
+                                </span>
+</td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons-round text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ARK-9278</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex-shrink-0">
+<img alt="Avatar" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI5Ax66uGjprEcRMggVfsnk90_JEbf1phI5q1ZkceEl9gfABt5up35ciuOJmb-EIVM-XLJIByr4qD8zwYspHnetJGKN3lLLNFLFQ9WFJdj7P1U9CEqiQKOmZz_fCWiHzk5pzGKEIcr9QuJDVESdA-uwspIwRrB1XaRZoCGyEHFkCFfCDJPC9SYlVbJNleUn9QOu9ThbeSroVfrcVUM5hkwC_aC_w1ZLlfP-cGrE0j1Evtlb282C2LJ0PPYisoUmDl9Ztf0jrlOBsA"/>
+</div>
+<span class="font-medium">Aoi Tanaka</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Oct 23, 2023, 02:20 PM</td>
+<td class="px-6 py-4 font-semibold">$560.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary mr-2"></span>
+                                    Paid
+                                </span>
+</td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons-round text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ARK-9277</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex-shrink-0">
+<img alt="Avatar" class="w-full h-full rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOWpHrVxVPqiImgQVLSHgy1oYVEIKuAjZsQg9ioHJPYRWZeblBi_-7cjvB_59dF5QnlCP4ij7JYZTgSmHT8mRpsSg6_FS0T0Q2dUJcQR-UQA7QBFq9cbR1wki9rINQ9JbtPh405cp4YlCOmVsOd3KNJJ8CJ57DdbKw88_sXNetdJuBLbdzCnSkJQwvc8xbDhb2MqfprckAPB5UB6OC6uyFVxeFKzkz7BNuI_kUjJQ5M166DCr8H8unevmuyMckKvjpKkXxa4ED02s"/>
+</div>
+<span class="font-medium">Sora Inoue</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Oct 22, 2023, 11:10 AM</td>
+<td class="px-6 py-4 font-semibold">$1,25.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-red-500/10 text-red-500">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500 mr-2"></span>
+                                    Failed
+                                </span>
+</td>
+<td class="px-6 py-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400">
+<span class="material-icons-round text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 lg:p-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+<p class="text-sm text-slate-500 dark:text-slate-400">Showing 1-10 of 2,482 transactions</p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50" disabled="">
+<span class="material-icons-round text-lg">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-white text-sm font-bold">1</button>
+<button class="w-8 h-8 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800">2</button>
+<button class="w-8 h-8 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800">3</button>
+<span class="text-slate-400 px-1">...</span>
+<button class="w-8 h-8 rounded-lg text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800">248</button>
+<button class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-icons-round text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<div class="mt-8 p-4 bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl flex items-start gap-4">
+<div class="p-2 bg-primary rounded-lg text-white">
+<span class="material-icons-round text-xl">info</span>
+</div>
+<div>
+<p class="font-semibold text-primary">Action Required</p>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-0.5">There are 3 pending payouts that require your immediate approval to be processed in the next cycle.</p>
+<button class="mt-3 text-sm font-bold text-primary hover:underline">Review Payouts →</button>
+</div>
+</div>
+</main>
+<div class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex justify-between items-center z-50">
+<button class="p-2 text-primary">
+<span class="material-icons-round">receipt_long</span>
+</button>
+<button class="p-2 text-slate-400">
+<span class="material-icons-round">inventory_2</span>
+</button>
+<button class="p-3 bg-primary text-white rounded-full -mt-10 anime-glow">
+<span class="material-icons-round">add</span>
+</button>
+<button class="p-2 text-slate-400">
+<span class="material-icons-round">people</span>
+</button>
+<button class="p-2 text-slate-400">
+<span class="material-icons-round">menu</span>
+</button>
+</div>
+
+</body></html>

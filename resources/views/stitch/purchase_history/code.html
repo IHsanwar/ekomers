@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Purchase History | Arkari Design</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF6B00", // Vibrant Orange
+              secondary: "#22C55E", // Success Green
+              "background-light": "#F9FAFB",
+              "background-dark": "#0F172A",
+            },
+            fontFamily: {
+              display: ["Space Grotesk", "sans-serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem",
+              "xl": "1rem",
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .font-display {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .anime-border {
+        position: relative;
+      }
+      .anime-border::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, #FF6B00 0%, transparent 100%);
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+<div class="flex items-center gap-2">
+<img alt="Arkari Design Logo" class="h-8 dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtTQJw826qrDRFEFmxqPt0QdoZLbViIbQlySsu79ZFIv23YSOOu8g85EB8PFjBC4dCz6-_LgcfBfhc-ZKnYxSeHx_7MwAXPvkfoa-lu7f0TfKdvbIX6s5lOLZpTgtaxIoL3Q_gCqGwqOxAuv7GwO6XrqHS9eyHk232b_W_yjsa3ql2OBCE7z9GYgbRfETqyoYj1YhBpnxmr-xde88sWWHsD4YAJ0MfE-puOc0tWJWRX3tB4gH-cfcjLRfwEin_QhVoS4e1WgqLIkw"/>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Collections</a>
+<a class="text-sm font-medium text-primary border-b-2 border-primary" href="#">My Account</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons text-slate-600 dark:text-slate-400">dark_mode</span>
+</button>
+<button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-icons text-slate-600 dark:text-slate-400">shopping_bag</span>
+<span class="absolute top-1 right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">3</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-gradient-to-tr from-primary to-orange-300 border-2 border-white dark:border-slate-700"></div>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:py-12">
+<header class="mb-10">
+<h1 class="text-3xl sm:text-4xl font-display font-bold mb-2 tracking-tight">Purchase History</h1>
+<p class="text-slate-500 dark:text-slate-400">Manage your orders and track recent shipments.</p>
+</header>
+<div class="flex flex-col sm:flex-row gap-4 mb-8">
+<div class="relative flex-grow">
+<span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Search orders..." type="text"/>
+</div>
+<div class="flex gap-2">
+<select class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary">
+<option>Last 3 months</option>
+<option>Last 6 months</option>
+<option>Year 2023</option>
+</select>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-colors">
+<span class="material-icons text-sm">tune</span>
+<span class="text-sm font-medium">Filter</span>
+</button>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="p-4 sm:p-6 bg-slate-50/50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
+<div class="flex gap-8">
+<div>
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Order Placed</p>
+<p class="text-sm font-medium">May 14, 2024</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Total</p>
+<p class="text-sm font-bold text-primary">$128.50</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Order #ARK-29402</p>
+<div class="flex gap-3">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors underline decoration-slate-300 underline-offset-4" href="#">View Invoice</a>
+</div>
+</div>
+</div>
+<div class="p-4 sm:p-6">
+<div class="flex flex-col lg:flex-row lg:items-center gap-6">
+<div class="flex-shrink-0 flex -space-x-4">
+<div class="w-16 h-16 rounded-lg bg-slate-100 dark:bg-slate-700 border-2 border-white dark:border-slate-800 overflow-hidden">
+<img alt="Cyberpunk Hoodie" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTs8Wn39OIhABjojGcIwbKcmGijsQGD3H4hqyTKgqL0YJKUJdoudxrGy3JAm27XG-HPjMfj4ReIeSR4op6wt7raS1tBTch6grXfwKMco_V9KIWRlD6VuSfrM-fmkR2XMtrHTGo0kJRSsdKFSiGa2ORtP0VbF617a8NdCweUhUz-LJ2Gfu4NFEAgVq-SU9_YTIO_vsYWvAQ2AYzUXE4HwAorg5arqR7kKW-uyAMxx3xVa3zBcx254g--UyXYU6_bhlwjSY0vvj34-U"/>
+</div>
+<div class="w-16 h-16 rounded-lg bg-slate-100 dark:bg-slate-700 border-2 border-white dark:border-slate-800 overflow-hidden">
+<img alt="Leather Jacket" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlCuP1b_5rETCzANToKI39Cgo4be8u6z6nZQuKsrelhU3F_Lty6eqkOq_oL6_Mw1osohGJgMH3-35ofM-y_HBUJeNDh7_Ao8wfB29zOuYoh3ByEbDkksK3qAcKSocc2THC1pR6tPPp4R1uC6CRDm0waVOijC69KKyzGvNH0bdO2Enwa3RpMCvDYM5PXz5AG6NE6vqq5pUeg7OPj7rlLJS4LOjg0vevSOZN9RBkRGVeXg3hSHIGgggBN45CiISD7ajgFpu15aCtnKE"/>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="flex h-2 w-2 rounded-full bg-secondary"></span>
+<p class="text-sm font-bold text-secondary">Delivered May 18, 2024</p>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Your package was left at the front door.</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex-1 lg:flex-none px-6 py-2.5 bg-primary hover:bg-orange-600 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20 active:scale-95">
+                                Reorder
+                            </button>
+<button class="flex-1 lg:flex-none px-6 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-sm font-bold rounded-xl transition-all">
+                                Review Items
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="p-4 sm:p-6 bg-slate-50/50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
+<div class="flex gap-8">
+<div>
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Order Placed</p>
+<p class="text-sm font-medium">May 20, 2024</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Total</p>
+<p class="text-sm font-bold text-primary">$45.00</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Order #ARK-30119</p>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors underline decoration-slate-300 underline-offset-4" href="#">View Invoice</a>
+</div>
+</div>
+<div class="p-4 sm:p-6">
+<div class="flex flex-col lg:flex-row lg:items-center gap-6">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 rounded-lg bg-slate-100 dark:bg-slate-700 border-2 border-white dark:border-slate-800 overflow-hidden">
+<img alt="Graphic Tee" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyYTsCokl8WZziOqaP1Pq-A7xhaOEjUTVDkz3uv_mE8tW5GR5VjTmyoYZHWWf_hwhrJGv6z3NmP4bd6kUdcKpjjvY1qTXz3M-xB8WHDBkuUX8Q264StGMVx_1fPFCWXOjNQ5C5JRhQhrPLIWKQ4DxHnKdTAu65hc0QnIQ-Wpor0AvnwLcH6PhKhh_yDsL0p2k9t2-z3UfR-h-dDEvNiI3PZcAsO1JvAORBTVVLtI7Yy023rARyeH2nSwEG8H04eLPpGZyHTaNYlLQ"/>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+<p class="text-sm font-bold text-primary">In Progress</p>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Estimated delivery: May 23, 2024</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex-1 lg:flex-none px-6 py-2.5 bg-primary hover:bg-orange-600 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20 active:scale-95 flex items-center justify-center gap-2">
+<span class="material-icons text-sm">local_shipping</span>
+                                Track Order
+                            </button>
+<button class="flex-1 lg:flex-none px-6 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-sm font-bold rounded-xl transition-all">
+                                Cancel Order
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow opacity-90">
+<div class="p-4 sm:p-6 bg-slate-50/50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
+<div class="flex gap-8">
+<div>
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Order Placed</p>
+<p class="text-sm font-medium">April 02, 2024</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Total</p>
+<p class="text-sm font-bold text-primary">$210.00</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<p class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 mb-1">Order #ARK-12883</p>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors underline decoration-slate-300 underline-offset-4" href="#">View Invoice</a>
+</div>
+</div>
+<div class="p-4 sm:p-6">
+<div class="flex flex-col lg:flex-row lg:items-center gap-6">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 rounded-lg bg-slate-100 dark:bg-slate-700 border-2 border-white dark:border-slate-800 overflow-hidden">
+<img alt="Limited Sneakers" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFiBtHhrIQ2wQBrsjV0xrYKqiEo0TuG-DAjtuXkpYFJyGOqo36NjqWqaEZZ4a2O8J-iVenKaAPMmk9o64t0JX4NlD7RSlKIZkNPOpSkLfU9CUUMVZGKObI3Lll5Vi_DeH8sdvC2aGH6JshakCbJ1jgLeJaKdw9K5_y_es8vYBjHb7y9jPdcwhSPB02jW1MI53GkP_38gXAda-T7nkg_ZaGb-NhKW5_Myn5LMQilCbpJrWpBVer2K90OhwM53WtzJ2X0YzprMGt9Qo"/>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center gap-2 mb-1">
+<span class="flex h-2 w-2 rounded-full bg-secondary"></span>
+<p class="text-sm font-bold text-secondary">Delivered April 05, 2024</p>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Handed to resident.</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex-1 lg:flex-none px-6 py-2.5 bg-primary hover:bg-orange-600 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20 active:scale-95">
+                                Reorder
+                            </button>
+<button class="flex-1 lg:flex-none px-6 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-sm font-bold rounded-xl transition-all">
+                                Get Help
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex justify-center">
+<nav class="flex items-center gap-2">
+<button class="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:text-primary transition-colors disabled:opacity-50" disabled="">
+<span class="material-icons text-sm">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary text-white font-bold text-sm shadow-lg shadow-orange-500/30">1</button>
+<button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium hover:text-primary transition-colors">2</button>
+<button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium hover:text-primary transition-colors">3</button>
+<span class="px-2 text-slate-400">...</span>
+<button class="w-10 h-10 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium hover:text-primary transition-colors">8</button>
+<button class="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:text-primary transition-colors">
+<span class="material-icons text-sm">chevron_right</span>
+</button>
+</nav>
+</div>
+</main>
+<footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 py-12">
+<div class="max-w-7xl mx-auto px-4 text-center">
+<img alt="Arkari Design Logo" class="h-6 mx-auto mb-6 dark:invert opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApGWAQzakG5xCfvCqh2ebx5QUG6a34Vcr-xTwcNBUbuxtj8-MA0vgIYyON0B-xTas1I5omVVdrWBGCcp8eBOursdaSt-1UZC5xz375FcbARpczhlX92df4QKCKWlqbC-NL1L39DiifWBSMmtvK7rn_2kFq4CKh92HSz-WLVeWIHwliLCMs4wN36CNmZEZJ5qLZ2wCdzj0t4vZUKXPTAV1QtdfX7G4wh7Kxnl3VFCVoOehYb5f2n-zC5dWnx4oZbLtWEcoz98YpvKE"/>
+<p class="text-sm text-slate-500 dark:text-slate-400">© 2024 Arkari Design. All rights reserved. Created for the future of style.</p>
+</div>
+</footer>
+
+</body></html>

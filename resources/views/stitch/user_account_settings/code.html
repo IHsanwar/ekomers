@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account Settings | Arkari Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF6B00", // Vibrant Orange
+                        secondary: "#4ADE80", // Anime Green
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                        accent: {
+                            orange: "#FF6B00",
+                            green: "#4ADE80",
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Bebas Neue", "sans-serif"],
+                        sans: ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                        "xl": "20px",
+                    },
+                },
+            },
+        };
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .anime-border {
+            border: 2px solid currentColor;
+            box-shadow: 4px 4px 0px 0px currentColor;
+        }
+        .anime-card {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .anime-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px currentColor;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex items-center gap-8">
+<img alt="Arkari Design Logo" class="h-10 dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdIRwYu_Fk9qg484IqCDv15WsmrIIOqaTwkcm0kRM9PcORaJ7OarBkAC1slaKwZbqR6rztScF3vSNS2KoO99KJ0Acfc4CERcl0rQ8l-KiyTGMqozCCfiBtNG2-yExsMAxDuaw3LaDWE5dm9DnvMtzj-xrtiiVm_uZICnu2DtPKjwZcBQMXrRXUre0xkHypAiH5nkNDxo2GpzicLc920k2DJtucSw-jr0ZDm4d0qUJDRxuuSoU23iKfb5ZBmO1z6lNtJVVnLYNcH1k"/>
+<div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wider">
+<a class="hover:text-primary transition-colors" href="#">SHOP</a>
+<a class="hover:text-primary transition-colors" href="#">COLLECTIONS</a>
+<a class="hover:text-primary transition-colors" href="#">COMMISSIONS</a>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" onclick="toggleDarkMode()">
+<span class="material-icons text-xl dark:hidden">dark_mode</span>
+<span class="material-icons text-xl hidden dark:block">light_mode</span>
+</button>
+<div class="relative group">
+<button class="flex items-center space-x-2 focus:outline-none">
+<img alt="Anime Avatar" class="w-10 h-10 rounded-full border-2 border-primary bg-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3vOYzyEJwoet_EkzGwmZGHKShAU6WgXceKx1_W52dBbfnMi51eHBbgyVvbT16AZB0rwFr8dUXRXIByIwW1am-775qQlXYgasPnLUW2NTmCISCfFJku1Ra-VFSGWN3_WNNHhLFOXcDXjHoEcaeCp2GiYTjDavPxKaIefcckjpPTXAmUGVoxCdDbG-Q_hwNtdC2iV2kKbWil6dznqDwSWNeLgMhJJdJSrNjZZAxZbMiS1Kd05AoC4AyYq99MnkLgyL6_x0lXgQ9Vdw"/>
+<span class="material-icons">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="flex flex-col lg:flex-row gap-12">
+<aside class="w-full lg:w-64 space-y-2">
+<div class="mb-8">
+<h1 class="font-display text-4xl tracking-tight mb-2">MY ACCOUNT</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400">Manage your profile &amp; preferences</p>
+</div>
+<nav class="flex flex-col space-y-1">
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-primary text-white font-bold" href="#">
+<span class="material-icons text-xl">person</span>
+<span>Personal Info</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-medium" href="#">
+<span class="material-icons text-xl">location_on</span>
+<span>Saved Addresses</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-medium" href="#">
+<span class="material-icons text-xl">shopping_bag</span>
+<span>Order History</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-medium" href="#">
+<span class="material-icons text-xl">notifications</span>
+<span>Notifications</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-medium text-red-500" href="#">
+<span class="material-icons text-xl">logout</span>
+<span>Sign Out</span>
+</a>
+</nav>
+</aside>
+<div class="flex-1 space-y-8">
+<section class="bg-white dark:bg-slate-900 p-8 rounded-xl border-2 border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-display text-2xl tracking-wide flex items-center gap-2">
+<span class="w-2 h-6 bg-primary inline-block"></span>
+                            PERSONAL INFORMATION
+                        </h2>
+<button class="text-primary font-bold hover:underline">Edit Info</button>
+</div>
+<div class="flex flex-col md:flex-row gap-8 items-start">
+<div class="relative">
+<img alt="Profile Picture" class="w-32 h-32 rounded-2xl anime-border text-primary bg-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArxxSEcgE-FvISN2ENDjWb1jwSuQr8FZla-opPKD49lhj6DQpBimmYkDe-0alXZCKUKw209GcRjq2oJC-dUosW2yt_rPUcJdH5mivEIdMQcPK0PpUtCTGjBVEeruIy7PKKchZW6-zKukqs_LYVD2ACLTZSw86YpwiG7p487cBCujL1CMLDoUvctuCJmuzglLx2UK0DMbtqU8_QwjNZVnULJKuSvhQEoH9hDoAt7SaE-f_rAeX9r2g1IYqWGraGUmY-oFf0y5Gbpfk"/>
+<button class="absolute -bottom-2 -right-2 bg-secondary p-2 rounded-full text-slate-900 hover:scale-110 transition-transform">
+<span class="material-icons text-sm">photo_camera</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 w-full">
+<div>
+<label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Full Name</label>
+<p class="text-lg font-semibold">Satoshi Nakamoto</p>
+</div>
+<div>
+<label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Email Address</label>
+<p class="text-lg font-semibold">satoshi@arkari.design</p>
+</div>
+<div>
+<label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Phone Number</label>
+<p class="text-lg font-semibold">+81 90-1234-5678</p>
+</div>
+<div>
+<label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Joined</label>
+<p class="text-lg font-semibold">March 2024</p>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-white dark:bg-slate-900 p-8 rounded-xl border-2 border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-display text-2xl tracking-wide flex items-center gap-2">
+<span class="w-2 h-6 bg-secondary inline-block"></span>
+                            SAVED ADDRESSES
+                        </h2>
+<button class="bg-slate-900 dark:bg-white dark:text-slate-900 text-white px-4 py-2 text-sm font-bold flex items-center gap-2 rounded hover:opacity-90 transition-opacity">
+<span class="material-icons text-sm">add</span> ADD NEW
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-6 rounded-lg border-2 border-primary/20 dark:border-primary/10 bg-primary/5 relative group cursor-pointer hover:border-primary transition-colors">
+<span class="absolute top-4 right-4 text-xs font-black bg-primary text-white px-2 py-0.5 rounded">DEFAULT</span>
+<div class="flex items-center gap-2 text-primary mb-3">
+<span class="material-icons">home</span>
+<span class="font-bold uppercase tracking-widest">Home Base</span>
+</div>
+<p class="text-sm leading-relaxed opacity-80">
+                                123 Akihabara Electric Town<br/>
+                                Chiyoda City, Tokyo 101-0021<br/>
+                                Japan
+                            </p>
+</div>
+<div class="p-6 rounded-lg border-2 border-slate-200 dark:border-slate-800 hover:border-secondary transition-colors cursor-pointer">
+<div class="flex items-center gap-2 text-secondary mb-3">
+<span class="material-icons">work</span>
+<span class="font-bold uppercase tracking-widest">Studio 1</span>
+</div>
+<p class="text-sm leading-relaxed opacity-80 text-slate-600 dark:text-slate-400">
+                                Arkari Design Lab, Suite 404<br/>
+                                Shibuya Crossing, Tokyo 150-0002<br/>
+                                Japan
+                            </p>
+</div>
+</div>
+</section>
+<section class="bg-white dark:bg-slate-900 p-8 rounded-xl border-2 border-slate-200 dark:border-slate-800">
+<div class="mb-8">
+<h2 class="font-display text-2xl tracking-wide flex items-center gap-2">
+<span class="w-2 h-6 bg-slate-900 dark:bg-white inline-block"></span>
+                            NOTIFICATIONS
+                        </h2>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+<div>
+<h4 class="font-bold">Order Updates</h4>
+<p class="text-sm text-slate-500">Get notified about your order status and shipping.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+<div>
+<h4 class="font-bold">New Drops</h4>
+<p class="text-sm text-slate-500">Be the first to know about new collection releases.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-bold">Artist Newsletter</h4>
+<p class="text-sm text-slate-500">Weekly insights into the design process and community news.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="mt-8 flex justify-end">
+<button class="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow">
+                            SAVE PREFERENCES
+                        </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<footer class="mt-20 border-t border-slate-200 dark:border-slate-800 py-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-8">
+<img alt="Arkari Design Logo Small" class="h-8 opacity-50 dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBldnzf3iawHFZny11BhVrR99t5VOXGlzGooXsc21K2bHqUUsfJUzADp9AS3KJCI_WzNq5Xo5WyibknV1pb8kAZNjcHsmmlhgOyZ9zFiPxvBWm2IJPAA07SXqhb5SvhDP1LARAOOGXX9JIS63EwJzYOJshVS2h17YeVZ0R_k9ZQEZUcr--pI9b70daD0LLR1_Vnu54xTrX3vU1MKJjWEe5V75knxGE-vc0IYlKRcthN1b3Cd8JrOkEscHuHuqn-JFw6fE6x58BNNN4"/>
+<div class="flex space-x-6 text-sm font-bold text-slate-400">
+<a class="hover:text-primary" href="#">PRIVACY POLICY</a>
+<a class="hover:text-primary" href="#">TERMS OF SERVICE</a>
+<a class="hover:text-primary" href="#">CONTACT US</a>
+</div>
+<p class="text-xs text-slate-400">© 2024 ARKARI DESIGN. ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+
+</body></html>

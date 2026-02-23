@@ -1,3 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Animations */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes sidebarSlide {
+    from {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-slate-50 text-foreground font-sans antialiased;
+    }
+}
+
+@layer components {
+    /* Button Base Styles */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium 
+               transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring 
+               focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:shadow-md;
+    }
+
+    .btn-primary {
+        @apply btn bg-slate-900 text-white hover:bg-slate-800 h-10 px-4 py-2;
+    }
+
+    .btn-secondary {
+        @apply btn bg-secondary text-secondary-foreground hover:bg-slate-200 h-10 px-4 py-2 border border-slate-200;
+    }
+
+    .btn-destructive {
+        @apply btn bg-red-600 text-white hover:bg-red-700 h-10 px-4 py-2;
+    }
+
+    .btn-outline {
+        @apply btn border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 h-10 px-4 py-2;
+    }
+
+    .btn-ghost {
+        @apply btn hover:bg-slate-100 hover:text-slate-900 h-10 px-4 py-2;
+    }
+
+    .btn-link {
+        @apply btn text-primary-600 underline-offset-4 hover:underline h-auto p-0;
+    }
+
+    .btn-sm {
+        @apply h-9 rounded-md px-3 text-xs;
+    }
+
+    .btn-lg {
+        @apply h-11 rounded-lg px-8 text-base;
+    }
+
+    .btn-icon {
+        @apply h-10 w-10 p-0 rounded-lg hover:bg-gray-100;
+    }
+
+    /* Input Styles */
+    .input {
+        @apply flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm 
+               ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium 
+               placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 
+               focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all duration-200
+               disabled:cursor-not-allowed disabled:opacity-50 hover:border-slate-300;
+    }
+
+    .input-error {
+        @apply border-red-500 focus-visible:ring-red-500;
+    }
+
+    /* Label Styles */
+    .label {
+        @apply text-sm font-medium leading-none text-slate-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+    }
+
+    /* Card Styles */
+    .card {
+        @apply rounded-lg border border-slate-200 bg-white text-slate-950 shadow-card transition-all duration-300;
+    }
+
+    .card-header {
+        @apply flex flex-col space-y-1.5 p-6;
+    }
+
+    .card-title {
+        @apply text-xl font-semibold leading-none tracking-tight;
+    }
+
+    .card-description {
+        @apply text-sm text-slate-500;
+    }
+
+    .card-content {
+        @apply p-6 pt-0;
+    }
+
+    .card-footer {
+        @apply flex items-center p-6 pt-0;
+    }
+
+    /* Badge Styles */
+    .badge {
+        @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors;
+    }
+
+    .badge-default {
+        @apply badge border-transparent bg-slate-900 text-white;
+    }
+
+    .badge-secondary {
+        @apply badge border-transparent bg-slate-100 text-slate-900;
+    }
+
+    .badge-success {
+        @apply badge border-transparent bg-emerald-100 text-emerald-800;
+    }
+
+    .badge-warning {
+        @apply badge border-transparent bg-amber-100 text-amber-800;
+    }
+
+    .badge-danger {
+        @apply badge border-transparent bg-red-100 text-red-800;
+    }
+
+    .badge-info {
+        @apply badge border-transparent bg-blue-100 text-blue-800;
+    }
+
+    .badge-outline {
+        @apply badge text-slate-900 border-slate-200;
+    }
+
+    /* Table Styles */
+    .table {
+        @apply w-full caption-bottom text-sm;
+    }
+
+    .table-header {
+        @apply [&_tr]:border-b;
+    }
+
+    .table-body {
+        @apply [&_tr:last-child]:border-0;
+    }
+
+    .table-row {
+        @apply border-b border-slate-200 transition-all duration-200 hover:bg-slate-50;
+    }
+
+    .table-head {
+        @apply h-12 px-4 text-left align-middle font-medium text-slate-500 [&:has([role=checkbox])]:pr-0;
+    }
+
+    .table-cell {
+        @apply p-4 align-middle [&:has([role=checkbox])]:pr-0;
+    }
+
+    /* Toast Styles */
+    .toast-container {
+        @apply fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none;
+    }
+
+    .toast {
+        @apply pointer-events-auto flex items-center gap-3 w-full p-4 rounded-lg border shadow-elevated bg-white 
+               animate-slideInRight transition-all duration-300;
+    }
+
+    .toast-success {
+        @apply toast border-emerald-200 bg-emerald-50;
+    }
+
+    .toast-success .toast-icon {
+        @apply text-emerald-600 text-lg;
+    }
+
+    .toast-error {
+        @apply toast border-red-200 bg-red-50;
+    }
+
+    .toast-error .toast-icon {
+        @apply text-red-600 text-lg;
+    }
+
+    .toast-warning {
+        @apply toast border-amber-200 bg-amber-50;
+    }
+
+    .toast-warning .toast-icon {
+        @apply text-amber-600 text-lg;
+    }
+
+    .toast-info {
+        @apply toast border-blue-200 bg-blue-50;
+    }
+
+    .toast-info .toast-icon {
+        @apply text-blue-600 text-lg;
+    }
+
+    .toast-title {
+        @apply font-medium text-slate-900;
+    }
+
+    .toast-description {
+        @apply text-sm text-slate-600;
+    }
+
+    /* Sidebar Styles for Admin */
+    .sidebar {
+        @apply w-64 bg-slate-900 text-white min-h-screen flex flex-col transition-all duration-300;
+    }
+
+    .sidebar-header {
+        @apply p-4 border-b border-slate-700;
+    }
+
+    .sidebar-brand {
+        @apply text-xl font-bold text-white;
+    }
+
+    .sidebar-nav {
+        @apply flex-1 py-4;
+    }
+
+    .sidebar-link {
+        @apply flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-300;
+    }
+
+    .sidebar-link::before {
+        content: '';
+        @apply absolute left-0 top-0 h-full w-1 bg-blue-500 
+               transform -translate-x-1 transition-transform duration-300;
+        position: absolute;
+    }
+
+    .sidebar-link:hover {
+        position: relative;
+    }
+
+    .sidebar-link:hover::before {
+        transform: translateX(0);
+    }
+
+    .sidebar-link i {
+        @apply w-5 text-center;
+    }
+
+    .sidebar-link-active {
+        @apply sidebar-link bg-slate-800 text-white border-l-4 border-primary-500;
+    }
+
+    /* Stats Card for Dashboard */
+    .stat-card {
+        @apply card p-6;
+    }
+
+    .stat-card-icon {
+        @apply w-12 h-12 rounded-lg flex items-center justify-center text-xl;
+    }
+
+    .stat-card-value {
+        @apply text-2xl font-bold text-slate-900;
+    }
+
+    .stat-card-label {
+        @apply text-sm text-slate-500 font-medium;
+    }
+
+    /* Dropdown Menu */
+    .dropdown-menu {
+        @apply absolute right-0 mt-2 w-56 rounded-md border border-slate-200 bg-white py-1 shadow-elevated z-50;
+    }
+
+    .dropdown-item {
+        @apply block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors;
+    }
+
+    .dropdown-item-danger {
+        @apply dropdown-item text-red-600 hover:bg-red-50;
+    }
+
+    /* Empty State */
+    .empty-state {
+        @apply flex flex-col items-center justify-center py-12 text-center;
+    }
+
+    .empty-state-icon {
+        @apply text-4xl text-slate-300 mb-4;
+    }
+
+    .empty-state-title {
+        @apply text-lg font-medium text-slate-900 mb-2;
+    }
+
+    .empty-state-description {
+        @apply text-sm text-slate-500 mb-4;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+    
+    .animate-slideInRight {
+        animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .animate-slideInUp {
+        animation: slideInUp 0.5s ease-out;
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .animate-sidebarSlide {
+        animation: sidebarSlide 0.3s ease-out;
+    }
+
+    .animate-pulse-glow {
+        animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .hover\:scale-105:hover {
+        transform: scale(1.05);
+    }
+}

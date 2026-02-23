@@ -16,6 +16,7 @@
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-gray-500 text-sm">Total Revenue</h2>
             <p class="text-2xl font-bold text-green-600">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+            <p class="text-sm text-gray-500 mt-1">This month: Rp {{ number_format($totalRevenueMonthly, 0, ',', '.') }}</p>
         </div>
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-gray-500 text-sm">Total Products</h2>
@@ -68,6 +69,7 @@
             'shipped' => 'bg-indigo-100 text-indigo-700',
             'completed' => 'bg-green-100 text-green-700',
             'cancelled' => 'bg-red-100 text-red-700',
+            'paid'=>'bg-green-100 text-green-700',
         ];
 
         $statusIcons = [
@@ -76,6 +78,7 @@
             'shipped' => 'fa-truck',
             'completed' => 'fa-check-circle',
             'cancelled' => 'fa-times-circle',
+            'paid' => 'fa-dollar-sign',
         ];
 
         $colorClass = $statusClasses[$tx->status] ?? 'bg-gray-100 text-gray-700';

@@ -1,84 +1,161 @@
-@extends('layouts.admin')
+@extends('layouts.stitch-admin')
+
+@section('header', 'Dashboard Overview')
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-sm font-medium text-gray-500">Total Transaksi</h3>
-        <p class="text-2xl font-bold">{{ number_format($totalTransactions) }}</p>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Total Transactions -->
+    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-3 bg-blue-500/10 rounded-xl">
+                <span class="material-icons-round text-blue-500">receipt_long</span>
+            </div>
+            <!-- Placeholder trend -->
+            <span class="flex items-center text-secondary text-xs font-bold">
+                <span class="material-icons-round text-sm mr-1">trending_up</span>
+                +5%
+            </span>
+        </div>
+        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Transactions</p>
+        <h3 class="text-2xl font-bold mt-1">{{ number_format($totalTransactions) }}</h3>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-sm font-medium text-gray-500">Total Pendapatan</h3>
-        <p class="text-2xl font-bold text-green-600">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+    <!-- Total Revenue -->
+    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-3 bg-secondary/10 rounded-xl">
+                <span class="material-icons-round text-secondary">payments</span>
+            </div>
+            <span class="flex items-center text-secondary text-xs font-bold">
+                <span class="material-icons-round text-sm mr-1">trending_up</span>
+                +12%
+            </span>
+        </div>
+        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Revenue</p>
+        <h3 class="text-2xl font-bold mt-1">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-sm font-medium text-gray-500">Pending</h3>
-        <p class="text-2xl font-bold text-yellow-600">{{ number_format($pendingCount) }}</p>
+    <!-- Pending Orders -->
+    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-3 bg-amber-500/10 rounded-xl">
+                <span class="material-icons-round text-amber-500">pending_actions</span>
+            </div>
+            <span class="flex items-center text-amber-500 text-xs font-bold">
+                <span class="material-icons-round text-sm mr-1">schedule</span>
+                Action Needed
+            </span>
+        </div>
+        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Orders</p>
+        <h3 class="text-2xl font-bold mt-1">{{ number_format($pendingCount) }}</h3>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-sm font-medium text-gray-500">Selesai</h3>
-        <p class="text-2xl font-bold text-blue-600">{{ number_format($completedCount) }}</p>
+    <!-- Completed Orders -->
+    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex justify-between items-start mb-4">
+            <div class="p-3 bg-primary-admin/10 rounded-xl">
+                <span class="material-icons-round text-primary-admin">check_circle</span>
+            </div>
+            <span class="flex items-center text-secondary text-xs font-bold">
+                <span class="material-icons-round text-sm mr-1">verified</span>
+                Success
+            </span>
+        </div>
+        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Completed Orders</p>
+        <h3 class="text-2xl font-bold mt-1">{{ number_format($completedCount) }}</h3>
     </div>
 </div>
 
-<h2 class="text-xl font-bold mb-4">Transaksi Terbaru</h2>
-
-<div class="bg-white rounded-lg shadow overflow-hidden">
-    <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelanggan</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-            @foreach($recentTransactions as $t)
-            <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $t->invoice_code }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                    {{ $t->user?->name ?? 'User #' . $t->user_id }}
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">Rp {{ number_format($t->total_amount, 0, ',', '.') }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                        {{ $t->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                        {{ $t->status === 'confirmed' ? 'bg-blue-100 text-blue-800' : '' }}
-                        {{ $t->status === 'shipped' ? 'bg-purple-100 text-purple-800' : '' }}
-                        {{ $t->status === 'completed' ? 'bg-green-100 text-green-800' : '' }}
-                        {{ $t->status === 'cancelled' ? 'bg-red-100 text-red-800' : '' }}">
-                        {{ ucfirst($t->status) }}
-                    </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $t->created_at->format('d M Y H:i') }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                    <div class="flex space-x-1">
-                        <form action="{{ route('admin.transactions.update-status', [$t, 'confirmed']) }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200">Konfirmasi</button>
-                        </form>
-                        <form action="{{ route('admin.transactions.update-status', [$t, 'shipped']) }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded hover:bg-purple-200">Dikirim</button>
-                        </form>
-                        <form action="{{ route('admin.transactions.update-status', [$t, 'completed']) }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded hover:bg-green-200">Selesai</button>
-                        </form>
-                        <form action="{{ route('admin.transactions.update-status', [$t, 'cancelled']) }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="text-xs px-2 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200">Batalkan</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+<!-- Recent Transactions -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+        <h4 class="font-bold text-lg">Recent Transactions</h4>
+        <button class="text-primary-admin text-sm font-bold hover:underline">View All</button>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
+                <tr>
+                    <th class="px-6 py-4">Invoice</th>
+                    <th class="px-6 py-4">Customer</th>
+                    <th class="px-6 py-4">Total</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">Date</th>
+                    <th class="px-6 py-4 text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                @forelse($recentTransactions as $t)
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                    <td class="px-6 py-4 text-sm font-bold text-slate-400">{{ $t->invoice_code }}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">
+                                <span class="material-icons-round text-slate-500 text-sm">person</span>
+                            </div>
+                            <span class="text-sm font-medium">{{ $t->user?->name ?? 'User #' . $t->user_id }}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold">Rp {{ number_format($t->total_amount, 0, ',', '.') }}</td>
+                    <td class="px-6 py-4">
+                        @php
+                            $statusColors = [
+                                'pending' => 'bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400',
+                                'confirmed' => 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400',
+                                'shipped' => 'bg-purple-100 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400',
+                                'completed' => 'bg-secondary/10 text-secondary',
+                                'cancelled' => 'bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400',
+                            ];
+                            $statusClass = $statusColors[$t->status] ?? 'bg-slate-100 text-slate-600';
+                        @endphp
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusClass }}">
+                            <span class="w-1 h-1 rounded-full mr-2 {{ str_replace(['/10','/20'], '', $statusClass) }} bg-current opacity-50"></span>
+                            {{ ucfirst($t->status) }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
+                        {{ $t->created_at->format('d M Y, H:i') }}
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end space-x-2">
+                             <form action="{{ route('admin.transactions.update-status', [$t, 'confirmed']) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-blue-500" title="Confirm">
+                                    <span class="material-icons-round text-sm">check</span>
+                                </button>
+                            </form>
+                            <form action="{{ route('admin.transactions.update-status', [$t, 'shipped']) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-purple-500" title="Ship">
+                                    <span class="material-icons-round text-sm">local_shipping</span>
+                                </button>
+                            </form>
+                            <form action="{{ route('admin.transactions.update-status', [$t, 'completed']) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-secondary" title="Complete">
+                                    <span class="material-icons-round text-sm">check_circle</span>
+                                </button>
+                            </form>
+                            <form action="{{ route('admin.transactions.update-status', [$t, 'cancelled']) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-red-500" title="Cancel">
+                                    <span class="material-icons-round text-sm">cancel</span>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                     <td colspan="6" class="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
+                        <span class="material-icons-round text-4xl mb-2 opacity-20">inbox</span>
+                        <p>No transactions yet</p>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

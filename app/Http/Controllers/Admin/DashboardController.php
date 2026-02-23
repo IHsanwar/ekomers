@@ -17,6 +17,7 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $totalTransactions = Transaction::count();
         $totalRevenue = Transaction::sum('total_amount');
+        $totalRevenueMonthly = Transaction::whereMonth('created_at', Carbon::now()->month)->sum('total_amount');
 
         // Statistik berdasarkan status transaksi
         $pendingCount = Transaction::where('status', 'pending')->count();
@@ -52,6 +53,7 @@ class DashboardController extends Controller
             'latestProducts' => $latestProducts,
             'recentTransactions' => $recentTransactions,
             'revenueData' => $revenueData,
+            'totalRevenueMonthly' => $totalRevenueMonthly,
         ]);
     }
 

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shopping Cart - Arkari Design</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#fb923c", // Orange accent
+              secondary: "#22c55e", // Green accent for checkout
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+            },
+            fontFamily: {
+              display: ["Space Grotesk", "sans-serif"],
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem",
+            },
+          },
+        },
+      };
+    </script>
+<style>
+        .anime-border {
+            position: relative;
+        }
+        .anime-border::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 100%;
+            height: 100%;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            z-index: -1;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans min-h-screen">
+<header class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="Arkari Design Logo" class="h-10 w-auto invert dark:invert-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfftB_WpGzrIKQxw5KlbT346EH2IvLDhGdqmS5D43M8meabLzx_nSUd8yMRJQMibHOmOD_RI_iN_hlWDT1K8GW0xPnO31V20u6ingFsOb3lrIkvIRSkPxb0xpOU9E8ONJ15cSTDS7BbZnwsivIFE-LcwQ7m2q6DQDLJDZlg_SG_2tXAtPsEq-aP5TVrWM-evPd-bGSj0FJkrArcgWMdvhIyQtpOOmT4DtnUdA1dk6qwqTxO8mzCfOIvp9d_qf3k4lPinyqlh7slf0"/>
+</div>
+<nav class="hidden md:flex items-center gap-8 font-medium">
+<a class="hover:text-primary transition-colors" href="#">Shop</a>
+<a class="hover:text-primary transition-colors" href="#">Collections</a>
+<a class="hover:text-primary transition-colors" href="#">Limited Drop</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 w-4 h-4 bg-primary text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 py-12">
+<div class="mb-12 max-w-2xl mx-auto">
+<div class="flex items-center justify-between relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 -translate-y-1/2 z-0"></div>
+<div class="absolute top-1/2 left-0 w-1/3 h-0.5 bg-primary -translate-y-1/2 z-0"></div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold ring-4 ring-background-light dark:ring-background-dark">1</div>
+<span class="text-sm font-bold text-primary">Cart</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-500 flex items-center justify-center font-bold ring-4 ring-background-light dark:ring-background-dark">2</div>
+<span class="text-sm font-medium text-slate-500">Shipping</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-500 flex items-center justify-center font-bold ring-4 ring-background-light dark:ring-background-dark">3</div>
+<span class="text-sm font-medium text-slate-500">Payment</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<div class="lg:col-span-2 space-y-6">
+<h1 class="text-3xl font-display font-bold mb-8">Your Cart (3 Items)</h1>
+<div class="group relative flex flex-col sm:flex-row gap-6 p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-primary/50 transition-all duration-300">
+<div class="w-full sm:w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden shrink-0">
+<img alt="Anime Streetwear Hoodie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQlfaap1xU8VwftTyyyBg_W5yAFmc4nUaHM017Tzyq35935HyRZF5O75AUUlqGm8NGCSgTv5MaoUKp0lFa93oODq_dsfhNewGYVz9mrDcVTtk3yvKUdjtZ2hnh1JITH7VbeNt_QyfJ_71KVBO25WQWv1GZrOyS2XS862S-sjl0JA8rUleZM7TLjv3AgChlmo-WZXJs59_q7T_ZiYMDwnliuDh-8cY6vk40rgkqx5D_yUluU47YFIRghdnZfPDAs_5JDVRyP5aH-wQ"/>
+</div>
+<div class="flex-grow space-y-2">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-bold font-display">Cyber-Ronin Oversized Hoodie</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Size: XL | Color: Phantom Black</p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden">
+<button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">-</button>
+<span class="px-4 py-1 font-bold">1</span>
+<button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">+</button>
+</div>
+<p class="text-xl font-bold text-primary font-display">$89.00</p>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col sm:flex-row gap-6 p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-primary/50 transition-all duration-300">
+<div class="w-full sm:w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden shrink-0">
+<img alt="Neon Pulse Sneakers" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCplysUVlqlD4J2iH7zj087cagIwvtw6WP0umWYOnt04YCRiUg-1yxHfv4hPgHKWKjCOfrucRqguJbclCXMkYq_LX9gJUg9HI9KxyMBqB_plt2greTU3iF-fNr-Li3YFHovA5DJMteBVBFfSIy2nTdtN_muafemMBDEBLsGPRdlSylP-_y6j69pcoGnpMcYs7nffHZhOIcDKVFkcNUopwqmSRFGRxRS8EQ-sVy_kL7v7UnZpONQb0XSRCb5aUB0f-AhOteGuaeyGWw"/>
+</div>
+<div class="flex-grow space-y-2">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-bold font-display">Neon Pulse Runners</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Size: 42 | Color: Electric Green</p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden">
+<button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">-</button>
+<span class="px-4 py-1 font-bold">1</span>
+<button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">+</button>
+</div>
+<p class="text-xl font-bold text-primary font-display">$145.00</p>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col sm:flex-row gap-6 p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-primary/50 transition-all duration-300">
+<div class="w-full sm:w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden shrink-0">
+<img alt="Limited Edition Watch" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo-gXxlokiboFVsrGHU1Zrhinc8tx7yKj5t8UC18kY3wiC2E9-zfhxSm1srbJRg9iTonpn_qDEVoYWwVKrN-jgKXPRuLIYLcFEe9OX6ZKBA7T1DZ13R0XyakXHTS8XL-o1ed9B0PqqJz2dmnQcn_TWNnW6fkYif5O3UNI7hwfgm-c_T1rW659VMaDCL4qJ-vEcAzzuRISjgT3vQi6Cqsshc6CUIQTDNQmQOEkqrKczOQLn17ZdI3vlVgxucbyD6p-SUR5sG5_H06A"/>
+</div>
+<div class="flex-grow space-y-2">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-xl font-bold font-display">Arkari 'Zero' Mech-Watch</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Edition: First Run</p>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden">
+<button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">-</button>
+<span class="px-4 py-1 font-bold">1</span>
+<button class="px-3 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">+</button>
+</div>
+<p class="text-xl font-bold text-primary font-display">$320.00</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-1">
+<div class="sticky top-28 space-y-6">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
+<h2 class="text-2xl font-display font-bold mb-6">Order Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between text-slate-500 dark:text-slate-400">
+<span>Subtotal</span>
+<span class="font-medium text-slate-900 dark:text-white">$554.00</span>
+</div>
+<div class="flex justify-between text-slate-500 dark:text-slate-400">
+<span>Estimated Shipping</span>
+<span class="font-medium text-slate-900 dark:text-white">$12.00</span>
+</div>
+<div class="flex justify-between text-slate-500 dark:text-slate-400">
+<span>Tax</span>
+<span class="font-medium text-slate-900 dark:text-white">$45.80</span>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-end">
+<span class="text-lg font-bold">Total</span>
+<div class="text-right">
+<p class="text-3xl font-display font-bold text-slate-900 dark:text-white">$611.80</p>
+<p class="text-xs text-slate-400">VAT Included</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="relative group">
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary" placeholder="Promo Code" type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-sm font-bold text-primary px-3 py-1.5 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-lg transition-colors">Apply</button>
+</div>
+<button class="w-full bg-secondary hover:bg-green-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-2 group">
+<span>Checkout Now</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-slate-400 mt-4 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">lock</span>
+                                Secure checkout by Stripe
+                            </p>
+</div>
+</div>
+<div class="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-2xl p-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<div>
+<h4 class="font-bold text-sm">Free Express Shipping</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Spend $40 more to unlock free shipping on your entire order.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-24">
+<h2 class="text-2xl font-display font-bold mb-8">Don't Forget These</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="group cursor-pointer">
+<div class="aspect-square bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden mb-4 relative">
+<img alt="Recommended Item" class="w-full h-full object-cover group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtbFzgTs3-L97fHt0hGY1VGCbUTYSxpbgUn7my2m5fKP--xrnsrXlBagSK2dyBf2CjfokqXxUkGd4AY9y6pRpfNwgG2WmnOH8aJjVEVfkARiDv68i_cYFHMPO_DQgN64kYErLC4vEaPYKeM_7jCVS8XGdCxlpXFZ7bXD19QRfgZsBXVSjwc0AabgtHdN2qxU3WqB6NqnHz01TkT1XV9TejIEKxtHQLG1lWHLnxTo4W59nzczEZ7k6Q_WpQdpeibV6q_WeE3wSnAaI"/>
+<button class="absolute bottom-3 right-3 w-8 h-8 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-md hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<h3 class="font-bold text-sm">Techwear Belt v2</h3>
+<p class="text-primary font-bold text-sm">$25.00</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden mb-4 relative">
+<img alt="Recommended Item" class="w-full h-full object-cover group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIjm04y_vluDehaW9jGJF5MMHscfT6VLgSEfQ7557KzYOiP4cAPOxOGQMFEtA8RsCKQl2gqfTHR46VYlabIVhxC5kELFsnquTh4K-mVJhS2LF2kpIeCzbWVQCm3VFkUCi8wLlQ92uSJXI-9p_JLn7gKthdJ8Xz1Q3qGEZ0dydtbgJDQ-66PdxhjQP_4oY02OxD55npchOU61kOHYyjPnYxdSWcHxQr9WKcJm43UlNj3jBSpkpZcnYvpWH-6svU7mc6OuOfU6-xp3U"/>
+<button class="absolute bottom-3 right-3 w-8 h-8 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-md hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<h3 class="font-bold text-sm">Neon Snapback</h3>
+<p class="text-primary font-bold text-sm">$32.00</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden mb-4 relative">
+<img alt="Recommended Item" class="w-full h-full object-cover group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj4hKs46BgZaWVf7q7O0CXtswqPkpxIgeEDFbICM-zfkJfQFBWXUJgEinoijVTHbZ60XBqN1Gy30BEJM2OYEmg5jOSFMf8M7SJzgvZ50tl4LecbNAICPapfrsHqmLzt9knLNevv0HFLVC3_JcdXJypMUCV-amc6kQnl8H4YUE6DZJy-Q78LX6T9N20IJgUa6aXTdXA1O0eDa0g4BKxs2oauyMJ6BbxNDHK1MXQTVsDvye-OHp_G9pgGP_bt8nIVOyXcfZoYU9jEhg"/>
+<button class="absolute bottom-3 right-3 w-8 h-8 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-md hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<h3 class="font-bold text-sm">Cyber Shades Gold</h3>
+<p class="text-primary font-bold text-sm">$45.00</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden mb-4 relative">
+<img alt="Recommended Item" class="w-full h-full object-cover group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8MqVDUwaHq1PQHjbOFuq5RgJMyXTvbCYyASpxhK4QTOGbyxqUX9kbrb0RgcoHTHrkVf-qAgXLScH0eUl70xUHXQVE-yp9nWBrd2dzwSiI1aV4y9LUSH2rNu0ebsLb3fS8buKFgMFfDjFJBHZog3b36K0eN4DZLV4GISMpQTCdhFi7YP3EaNU81seSB4fe_VU2UDF9RMAZgJ5p27dqILno7Gi5GWnyjnSrzqHuJgBkYMILwCLWn2LhlYv6YdLshRMoyMgiM2hUc80"/>
+<button class="absolute bottom-3 right-3 w-8 h-8 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-md hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<h3 class="font-bold text-sm">Minimalist Watch</h3>
+<p class="text-primary font-bold text-sm">$120.00</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-32 border-t border-slate-200 dark:border-slate-800 py-12 bg-white dark:bg-slate-950">
+<div class="max-w-7xl mx-auto px-4 text-center">
+<img alt="Arkari Design Logo" class="h-8 mx-auto mb-8 opacity-50 dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF88gdb1J32vl5YuJZmYPkLfM25YMVfycFgf3yUA6iOYmfugO9k3wp8yVN7pdIpaTrzkwW2Y9nQUJUmWZ41t5B1584D_xOsRA8_rcHGpLQPrNqV3AjFYc6dvg9TNvqauIroQH2m3chWmYFCM_YAQuIucGUbn3yMgKHC-7Q37-J4jAzqoQ8sDZVBypXGhqSpy2tMd4D-oQcasXusObi3KH7PbFpYsRxjx8PQZrJE1qH8KW6QkO4ydeqq9ahQ5kUZ-AMPWJAThkfBb0"/>
+<p class="text-slate-500 text-sm mb-6">© 2024 Arkari Design. Inspired by the streets, built for the future.</p>
+<div class="flex justify-center gap-6">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#">Instagram</a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#">Twitter</a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#">Discord</a>
+</div>
+</div>
+</footer>
+
+</body></html>

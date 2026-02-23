@@ -1,0 +1,104 @@
+@extends('layouts.frontend')
+
+@section('content')
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header -->
+    <div class="mb-6">
+        <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-4">
+            <i class="fa-solid fa-arrow-left mr-2"></i>Back to Dashboard
+        </a>
+        <h1 class="text-2xl font-bold text-slate-900">
+            <i class="fa-solid fa-receipt mr-2 text-primary-600"></i>Your Transactions
+        </h1>
+        <p class="text-slate-500 mt-1">View and manage your order history</p>
+    </div>
+
+    @if($userTransaction->isEmpty())
+        <!-- Empty State -->
+        <div class="card">
+            <div class="empty-state py-16">
+                <i class="fa-solid fa-inbox empty-state-icon"></i>
+                <h3 class="empty-state-title">No transactions yet</h3>
+                <p class="empty-state-description">You haven't made any purchases yet. Start shopping now!</p>
+                <a href="{{ route('product.index') }}" class="btn-primary">
+                    <i class="fa-solid fa-grid-2 mr-2"></i>Browse Products
+                </a>
+            </div>
+        </div>
+    @else
+        <div class="space-y-4">
+            @foreach($userTransaction as $transaction)
+                <div class="card p-4 md:p-6 hover:shadow-lg transition-shadow">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                        <!-- Transaction ID & Date -->
+                        <div class="md:col-span-3">
+                            <p class="text-sm text-slate-500 mb-1">Transaction ID</p>
+                            <p class="font-semibold text-slate-900">#{{ $transaction->id }}</p>
+                            <p class="text-xs text-slate-400 mt-2">
+                                <i class="fa-solid fa-calendar mr-1"></i>{{ $transaction->created_at->format('d M Y H:i') }}
+                            </p>
+                        </div>
+
+                        <!-- Total Amount -->
+                        <div class="md:col-span-3">
+                            <p class="text-sm text-slate-500 mb-1">Total Amount</p>
+                            <p class="text-xl font-bold text-primary-600">
+                                Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}
+                            </p>
+                        </div>
+
+                        <!-- Status Badge -->
+                        <div class="md:col-span-2">
+                            <p class="text-sm text-slate-500 mb-1">Status</p>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
+                                @if($transaction->status === 'completed')
+                                    bg-green-100 text-green-800
+                                @elseif($transaction->status === 'pending')
+                                    bg-yellow-100 text-yellow-800
+                                @elseif($transaction->status === 'failed')
+                                    bg-red-100 text-red-800
+                            
+                            @elseif($transaction->status === 'paid')
+                                    bg-green-100 text-green-800
+                            @else
+                                    bg-slate-100 text-slate-800
+                                @endif
+                            ">
+                                <i class="fa-solid 
+                                @if($transaction->status === 'completed')
+                                    fa-circle-check mr-2
+                                @elseif($transaction->status === 'pending')
+                                    fa-clock mr-2
+                                @elseif($transaction->status === 'failed')
+
+                                    fa-circle-xmark mr-2
+                                @elseif($transaction->status === 'paid')
+                                    fa-check-circle mr-2
+                                @else
+                                    fa-circle mr-2
+                                @endif
+                                "></i>
+                                {{ ucfirst($transaction->status) }}
+                            </span>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="md:col-span-4 flex gap-2 justify-end">
+                            <a href="{{ route('user.transactions.details', $transaction->id) }}" 
+                               class="btn-primary btn-sm">
+                                <i class="fa-solid fa-eye mr-1.5"></i>View Details
+                            </a>
+                            @if($transaction->status === 'completed')
+                                <a href="{{ route('transactions.invoice.download', $transaction->id) }}" 
+                                   class="btn-outline btn-sm">
+                                    <i class="fa-solid fa-download mr-1.5"></i>Invoice
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+@endsection

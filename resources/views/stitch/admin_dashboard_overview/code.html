@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Arkari Design Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Material+Icons+Round&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF6B00", // Arkari Orange
+                        secondary: "#22C55E", // Arkari Green
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E293B",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        body: ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                },
+            },
+        };
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .sidebar-item-active {
+            background: linear-gradient(90deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 107, 0, 0) 100%);
+            border-left: 4px solid #FF6B00;
+        }
+        .anime-gradient {
+            background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 flex flex-col hidden lg:flex">
+<div class="p-6">
+<img alt="Arkari Design Logo" class="h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSt8dyFQPeRxvh8248HNLA7iTztOkIBKuDaQ_BPdJCYnU3sys82Cbkeu4KVYmMePdEd_9SaZk6ixuWe9L-hfYQu5VUJdVLcf-WqYYRmlTjXKAXWLT2OMRckV2mboC2dh1KGlwQM5yB1LH8uryeyBIxS68pBDzq4bfTXUdOgHndOd9uMx1iIlP8BWTzPDAC3lx97YlW3IkEATrr_eCCHKRsfI41Hznc9CwxBfjcGGZeFj9Ujnuta_KllhbmEmE5Qf-IwP1D34rtrOM"/>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="sidebar-item-active flex items-center px-4 py-3 text-primary group" href="#">
+<span class="material-icons-round mr-3">dashboard</span>
+<span class="font-semibold text-sm">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons-round mr-3 group-hover:text-primary">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons-round mr-3 group-hover:text-primary">shopping_bag</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons-round mr-3 group-hover:text-primary">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons-round mr-3 group-hover:text-primary">analytics</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-icons-round mr-3 group-hover:text-primary">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</div>
+</nav>
+<div class="p-4">
+<div class="bg-primary/10 dark:bg-primary/5 rounded-xl p-4 border border-primary/20">
+<p class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Pro Plan</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 mb-3">Upgrade for advanced analytics &amp; tools.</p>
+<button class="w-full py-2 px-4 bg-primary text-white text-xs font-bold rounded-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">Upgrade Now</button>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<header class="h-16 bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10 px-6 flex items-center justify-between">
+<div class="flex items-center">
+<button class="lg:hidden mr-4 text-slate-600 dark:text-slate-400">
+<span class="material-icons-round">menu</span>
+</button>
+<h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-orange-400">Overview</h1>
+</div>
+<div class="flex items-center space-x-4">
+<div class="relative hidden md:block">
+<span class="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary" placeholder="Search data..." type="text"/>
+</div>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors" onclick="toggleDarkMode()">
+<span class="material-icons-round">dark_mode</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full relative">
+<span class="material-icons-round">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-800 mx-2"></div>
+<div class="flex items-center space-x-3 cursor-pointer group">
+<div class="w-8 h-8 rounded-full anime-gradient flex items-center justify-center text-white font-bold text-xs ring-2 ring-primary ring-offset-2 ring-offset-surface-light dark:ring-offset-surface-dark">AD</div>
+<span class="text-sm font-semibold hidden sm:block">Admin Arkari</span>
+<span class="material-icons-round text-slate-400 text-sm">expand_more</span>
+</div>
+</div>
+</header>
+<div class="p-6 space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/10 rounded-xl">
+<span class="material-icons-round text-primary">payments</span>
+</div>
+<span class="flex items-center text-secondary text-xs font-bold">
+<span class="material-icons-round text-sm mr-1">trending_up</span>
+                                +12.5%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Sales</p>
+<h3 class="text-2xl font-bold mt-1">$124,592.00</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-secondary/10 rounded-xl">
+<span class="material-icons-round text-secondary">shopping_cart</span>
+</div>
+<span class="flex items-center text-secondary text-xs font-bold">
+<span class="material-icons-round text-sm mr-1">trending_up</span>
+                                +8.2%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Active Orders</p>
+<h3 class="text-2xl font-bold mt-1">1,284</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-blue-500/10 rounded-xl">
+<span class="material-icons-round text-blue-500">person_add</span>
+</div>
+<span class="flex items-center text-primary text-xs font-bold">
+<span class="material-icons-round text-sm mr-1">trending_down</span>
+                                -2.4%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">New Customers</p>
+<h3 class="text-2xl font-bold mt-1">452</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-purple-500/10 rounded-xl">
+<span class="material-icons-round text-purple-500">star</span>
+</div>
+<span class="flex items-center text-secondary text-xs font-bold">
+<span class="material-icons-round text-sm mr-1">trending_up</span>
+                                +4.1%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg. Rating</p>
+<h3 class="text-2xl font-bold mt-1">4.9 / 5.0</h3>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-bold text-lg">Sales Performance</h4>
+<select class="bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-primary py-1 px-3">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+<div class="h-64 flex items-end justify-between space-x-2 px-2">
+<div class="flex-1 bg-slate-100 dark:bg-slate-800 rounded-t-lg h-[40%] hover:bg-primary/20 transition-all cursor-pointer relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">Mon: $12k</div>
+</div>
+<div class="flex-1 bg-slate-100 dark:bg-slate-800 rounded-t-lg h-[65%] hover:bg-primary/20 transition-all cursor-pointer group"></div>
+<div class="flex-1 bg-primary rounded-t-lg h-[85%] hover:bg-primary/80 transition-all cursor-pointer group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] py-1 px-2 rounded">Wed: $24k</div>
+</div>
+<div class="flex-1 bg-slate-100 dark:bg-slate-800 rounded-t-lg h-[55%] hover:bg-primary/20 transition-all cursor-pointer group"></div>
+<div class="flex-1 bg-slate-100 dark:bg-slate-800 rounded-t-lg h-[75%] hover:bg-primary/20 transition-all cursor-pointer group"></div>
+<div class="flex-1 bg-secondary rounded-t-lg h-[95%] hover:bg-secondary/80 transition-all cursor-pointer group"></div>
+<div class="flex-1 bg-slate-100 dark:bg-slate-800 rounded-t-lg h-[60%] hover:bg-primary/20 transition-all cursor-pointer group"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+<h4 class="font-bold text-lg mb-6">Inventory Status</h4>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-slate-600 dark:text-slate-400">Streetwear</span>
+<span class="font-bold">64%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 64%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-slate-600 dark:text-slate-400">Accessories</span>
+<span class="font-bold">22%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 22%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-slate-600 dark:text-slate-400">Limited Edition</span>
+<span class="font-bold">14%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+<div class="bg-blue-500 h-2 rounded-full" style="width: 14%"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Low Stock Alert</p>
+<p class="text-sm font-semibold mt-1">Neon Katana T-Shirt (XL)</p>
+</div>
+<span class="bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 text-[10px] px-2 py-1 rounded-full font-bold">5 LEFT</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+<h4 class="font-bold text-lg">Recent Orders</h4>
+<button class="text-primary text-sm font-bold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Order ID</th>
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">Product</th>
+<th class="px-6 py-4">Amount</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-slate-400">#AD-8842</td>
+<td class="px-6 py-4">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">JD</div>
+<span class="text-sm font-medium">Jin Doi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Cyberpunk Hooded Vest</td>
+<td class="px-6 py-4 text-sm font-bold">$129.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary">
+<span class="w-1 h-1 bg-secondary rounded-full mr-2"></span>
+                                            Delivered
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons-round text-slate-400">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-slate-400">#AD-8841</td>
+<td class="px-6 py-4">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">SM</div>
+<span class="text-sm font-medium">Sora Midoriya</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Techwear Cargo Pants</td>
+<td class="px-6 py-4 text-sm font-bold">$89.50</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+<span class="w-1 h-1 bg-primary rounded-full mr-2"></span>
+                                            Processing
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons-round text-slate-400">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-slate-400">#AD-8840</td>
+<td class="px-6 py-4">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">KT</div>
+<span class="text-sm font-medium">Kenji Tanaka</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Arkari Graphic Tee (S)</td>
+<td class="px-6 py-4 text-sm font-bold">$34.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400">
+<span class="w-1 h-1 bg-blue-500 rounded-full mr-2"></span>
+                                            Shipped
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons-round text-slate-400">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer class="p-6 mt-auto text-center text-slate-400 text-xs border-t border-slate-200 dark:border-slate-800">
+                © 2024 Arkari Design. All Rights Reserved. Dashboard Variant 5.
+            </footer>
+</main>
+</div>
+
+</body></html>
