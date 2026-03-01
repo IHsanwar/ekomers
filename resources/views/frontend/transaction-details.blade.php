@@ -145,13 +145,35 @@
             <p class="text-sm text-slate-500">
                 <i class="fa-solid fa-info-circle mr-2"></i>Need help? Contact our support team for assistance.
             </p>
-            <div class="flex gap-3">
+            <div class="flex gap-3 flex-wrap">
                 @if($transaction->status === 'completed')
                     <a href="{{ route('transactions.invoice.download', $transaction->id) }}" 
                        class="btn-primary btn-sm">
                         <i class="fa-solid fa-download mr-1.5"></i>Download Invoice
                     </a>
                 @endif
+                
+                @if($transaction->status === 'pending')
+                    <form action="{{ route('user.transactions.cancel', $transaction->id) }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="btn-outline btn-sm text-red-600 hover:bg-red-50" 
+                                onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
+                            <i class="fa-solid fa-ban mr-1.5"></i>Cancel Order
+                        </button>
+                    </form>
+                @endif
+
+                @if(in_array($transaction->status, ['cancelled', 'completed', 'failed']))
+                    <form action="{{ route('user.transactions.delete', $transaction->id) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-outline btn-sm text-red-600 hover:bg-red-50" 
+                                onclick="return confirm('Hapus riwayat pesanan ini secara permanen?')">
+                            <i class="fa-solid fa-trash mr-1.5"></i>Delete History
+                        </button>
+                    </form>
+                @endif
+                
                 <a href="{{ route('user.transactions.index') }}" 
                    class="btn-outline btn-sm">
                     <i class="fa-solid fa-arrow-left mr-1.5"></i>Back

@@ -5,7 +5,7 @@
     <!-- Hero Section -->
     <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-8 md:p-12 mb-10 text-white">
         <div class="max-w-2xl">
-            <h1 class="text-3xl md:text-4xl font-bold mb-4">Welcome to ShopKu</h1>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">Welcome to The Artifact</h1>
             <p class="text-slate-300 text-lg mb-6">Discover amazing products at great prices. Shop with confidence.</p>
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('product.index') }}" class="btn bg-white text-slate-900 hover:bg-slate-100 h-11 px-6">

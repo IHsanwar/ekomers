@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'ShopKu') }}</title>
+    <title>{{ config('app.name', 'The Artifact') }}</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
                         <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
                             <i class="fa-solid fa-store text-white text-sm"></i>
                         </div>
-                        <span class="text-xl font-bold text-slate-900">ShopKu</span>
+                        <span class="text-xl font-bold text-slate-900">The Artifact</span>
                     </a>
                 </div>
 
@@ -49,8 +49,11 @@
                                     {{ $cartCount }}
                                 </span>
                             @endif
+                            Cart
                         </a>
-
+                        <a href="{{ route('user.transactions.index') }}" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+                            <i class="fa-solid fa-receipt mr-1.5"></i>Orders
+</a>
                         <!-- User Menu -->
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" class="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
@@ -195,10 +198,10 @@
                     <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
                         <i class="fa-solid fa-store text-white text-sm"></i>
                     </div>
-                    <span class="font-bold text-slate-900">ShopKu</span>
+                    <span class="font-bold text-slate-900">The Artifact</span>
                 </div>
                 <p class="text-sm text-slate-500">
-                    &copy; {{ date('Y') }} ShopKu. All rights reserved.
+                    &copy; {{ date('Y') }} The Artifact. All rights reserved.
                 </p>
             </div>
         </div>

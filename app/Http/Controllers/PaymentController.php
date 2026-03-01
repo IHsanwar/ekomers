@@ -97,6 +97,11 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Transaction not found'], 404);
         }
 
+        // Save payment_type if provided from midtrans
+        if (isset($notif->payment_type)) {
+            $transaction->update(['payment_method' => $notif->payment_type]);
+        }
+
         if (in_array($notif->transaction_status, ['settlement', 'capture'])) {
             $this->transactionService->updateStatus($transaction, 'paid');
         } elseif (in_array($notif->transaction_status, ['expire', 'cancel', 'deny'])) {

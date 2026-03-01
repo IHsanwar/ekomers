@@ -76,13 +76,6 @@
                                           :value="old('quantity', $product?->quantity)" min="0" required />
                             <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
                         </div>
-
-                        <div>
-                            <x-input-label for="whatsapp_link" value="WhatsApp Link" />
-                            <x-text-input id="whatsapp_link" name="whatsapp_link" type="url" class="mt-1.5 w-full" 
-                                          :value="old('whatsapp_link', $product?->whatsapp_link)" 
-                                          placeholder="https://wa.me/6281234567890" required />
-                            <x-input-error :messages="$errors->get('whatsapp_link')" class="mt-2" />
                         </div>
                     </div>
                 </div>

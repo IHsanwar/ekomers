@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\TransactionItems;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\ShippingOption;
 use Barryvdh\DomPDF\Facade\Pdf; // pastikan sudah install barryvdh/laravel-dompdf
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,8 @@ class TransactionController extends Controller
         'items' => 'required|array',
         'items.*.product_id' => 'required|exists:products,id',
         'items.*.quantity' => 'required|integer|min:1',
+        'shipping_option_id' => 'required|exists:shipping_options,id',
+        'address' => 'required|string|max:500',
     ]);
 
     $totalAmount = 0;
@@ -28,6 +31,10 @@ class TransactionController extends Controller
         $product = Product::findOrFail($item['product_id']);
         $totalAmount += $product->price * $item['quantity'];
     }
+
+    // Add shipping cost to total
+    $shippingOption = ShippingOption::findOrFail($request->input('shipping_option_id'));
+    $totalAmount += $shippingOption->cost;
 
     // invoice unik
     $invoiceCode = 'INV-' . now()->format('YmdHis') . '-' . strtoupper(Str::random(6));
@@ -38,14 +45,16 @@ class TransactionController extends Controller
             'user_id' => auth()->id(),
             'total_amount' => $totalAmount,
             'status' => 'pending',
+            'payment_method' => 'midtrans',
             'invoice_code' => $invoiceCode,
+            'shipping_option_id' => $request->input('shipping_option_id'),
+            'address' => $request->input('address'),
         ]);
 
         foreach ($request->items as $item) {
             $product = Product::findOrFail($item['product_id']);
 
             TransactionItems::create([
-                'payment_method' => 'midtrans',
                 'transaction_id' => $transaction->id,
                 'product_id' => $product->id,
                 'quantity' => $item['quantity'],
@@ -70,9 +79,10 @@ class TransactionController extends Controller
         $cartItems = Cart::where('user_id', auth()->id())
             ->with('product')
             ->get();
-            
+        
+        $shippingOptions = ShippingOption::all();
 
-        return view('frontend.checkout', compact('cartItems'));
+        return view('frontend.checkout', compact('cartItems', 'shippingOptions'));
     }
 
     public function generateReport(Request $request)

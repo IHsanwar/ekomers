@@ -12,6 +12,12 @@ class Transaction extends Model
         'status',
         'payment_method',
         'invoice_code',
+        'shipping_option_id',
+        'shipping_code',
+        'shipping_status',
+        'shipped_at',
+        'delivered_at',
+        'address',
     ];
     public function items()
 {
@@ -30,11 +36,18 @@ class Transaction extends Model
     }
      protected $casts = [
         'total_amount' => 'decimal:2',
+        'shipped_at' => 'datetime',
+        'delivered_at' => 'datetime',
     ];
 
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function shippingOption()
+    {
+        return $this->belongsTo(ShippingOption::class, 'shipping_option_id');
     }
 
     // Scope untuk status

@@ -7,19 +7,18 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\TransactionUserController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Middleware\EnsureUserIsAdmin;
-
+use App\Http\Controllers\ShippingOptionController;
 /*
 |--------------------------------------------------------------------------
 | Public
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +82,12 @@ Route::middleware('auth')->group(function () {
         ->name('user.transactions.index');
     Route::get('/user/transactions/{id}', [TransactionUserController::class, 'userTransactionDetails'])
         ->name('user.transactions.details');
+    Route::post('/user/transactions/{id}/cancel', [TransactionUserController::class, 'cancelTransaction'])
+        ->name('user.transactions.cancel');
+    Route::delete('/user/transactions/{id}/delete', [TransactionUserController::class, 'deleteTransaction'])
+        ->name('user.transactions.delete');
+    Route::post('/user/transactions/bulk-delete', [TransactionUserController::class, 'bulkDelete'])
+        ->name('user.transactions.bulk-delete');
 });
 
 /*
@@ -103,7 +108,12 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])
     ->name('admin.')
     ->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Transactions Management
+        Route::get('/transactions', [DashboardController::class, 'transactionPage'])->name('transactions.index');
+        Route::get('/transactions/{transaction}', [DashboardController::class, 'transactionDetail'])->name('transactions.show');
+        Route::patch('/transactions/{transaction}/shipping', [DashboardController::class, 'updateShippingStatus'])->name('transactions.update-shipping');
 
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
@@ -113,6 +123,15 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])
 
         Route::post('/transactions/{transaction}/{status}', [DashboardController::class, 'updateStatus'])
             ->name('transactions.update-status');
+        Route::post('/transactions/bulk-delete', [DashboardController::class, 'bulkDeleteTransactions'])
+            ->name('transactions.bulk-delete');
+
+
+        Route::get('/shipping-options', [ShippingOptionController::class, 'index'])->name('shipping-options.index');
+        Route::get('/shipping-options/create', [ShippingOptionController::class, 'create'])->name('shipping-options.create');
+        Route::post('/shipping-options', [ShippingOptionController::class, 'store'])->name('shipping-options.store');
+        Route::put('/shipping-options/{id}', [ShippingOptionController::class, 'update'])->name('shipping-options.update');
+        Route::delete('/shipping-options/{id}', [ShippingOptionController::class, 'destroy'])->name('shipping-options.destroy');
     });
 
 /*

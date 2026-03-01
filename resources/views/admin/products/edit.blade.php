@@ -75,13 +75,6 @@
                             <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
                         </div>
 
-                        <div>
-                            <x-input-label for="whatsapp_link" value="WhatsApp Link" />
-                            <x-text-input id="whatsapp_link" name="whatsapp_link" type="url" class="mt-1.5 w-full" 
-                                          :value="old('whatsapp_link', $product->whatsapp_link)" 
-                                          placeholder="https://wa.me/6281234567890" required />
-                            <x-input-error :messages="$errors->get('whatsapp_link')" class="mt-2" />
-                        </div>
                     </div>
                 </div>
             </div>
@@ -161,25 +154,31 @@
                 </div>
             </div>
 
-            <!-- Danger Zone -->
-            <div class="card border-red-200">
-                <div class="p-6 border-b border-red-200 bg-red-50">
-                    <h3 class="font-semibold text-red-700">
-                        <i class="fa-solid fa-triangle-exclamation mr-2"></i>Danger Zone
-                    </h3>
-                </div>
-                <div class="p-6">
-                    <form action="{{ route('admin.products.destroy', $product) }}" method="POST"
-                          onsubmit="return confirm('Are you sure you want to delete this product? This action cannot be undone.');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-destructive w-full justify-center">
-                            <i class="fa-solid fa-trash mr-2"></i>Delete Product
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </form>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+    <div class="lg:col-span-2 hidden lg:block"></div>
+    <div class="lg:col-span-1">
+        <!-- Danger Zone -->
+        <div class="card border-red-200">
+            <div class="p-6 border-b border-red-200 bg-red-50">
+                <h3 class="font-semibold text-red-700">
+                    <i class="fa-solid fa-triangle-exclamation mr-2"></i>Danger Zone
+                </h3>
+            </div>
+            <div class="p-6">
+                <form action="{{ route('admin.products.destroy', $product) }}" method="POST"
+                      onsubmit="return confirm('Are you sure you want to delete this product? This action cannot be undone.');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-destructive w-full justify-center">
+                        <i class="fa-solid fa-trash mr-2"></i>Delete Product
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

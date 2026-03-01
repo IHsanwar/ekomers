@@ -71,12 +71,29 @@
 <div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
     <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
         <h4 class="font-bold text-lg">Recent Transactions</h4>
-        <button class="text-primary-admin text-sm font-bold hover:underline">View All</button>
+        <div class="flex gap-3">
+            <!-- Bulk Delete Actions -->
+            <div id="bulkAdminActions" class="hidden flex gap-3 items-center">
+                <span class="text-sm text-slate-600"><span id="adminSelectedCount">0</span> selected</span>
+                <form id="adminBulkDeleteForm" action="{{ route('admin.transactions.bulk-delete') }}" method="POST" class="inline">
+                    @csrf
+                    <input type="hidden" id="adminBulkIds" name="transaction_ids" value="">
+                    <button type="submit" class="px-3 py-1 text-sm bg-red-100 text-red-600 rounded hover:bg-red-200 transition" 
+                            onclick="return confirm('Hapus transaksi terpilih secara permanen?')">
+                        <i class="fa-solid fa-trash mr-1.5"></i>Delete Selected
+                    </button>
+                </form>
+            </div>
+            <button class="text-primary-admin text-sm font-bold hover:underline">View All</button>
+        </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left">
             <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
                 <tr>
+                    <th class="px-6 py-4 w-12">
+                        <input type="checkbox" id="adminSelectAll" class="rounded" />
+                    </th>
                     <th class="px-6 py-4">Invoice</th>
                     <th class="px-6 py-4">Customer</th>
                     <th class="px-6 py-4">Total</th>
@@ -87,7 +104,12 @@
             </thead>
             <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                 @forelse($recentTransactions as $t)
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors admin-transaction-row">
+                    <td class="px-6 py-4">
+                        @if(in_array($t->status, ['cancelled', 'completed', 'failed']))
+                            <input type="checkbox" class="admin-transaction-checkbox" value="{{ $t->id }}" />
+                        @endif
+                    </td>
                     <td class="px-6 py-4 text-sm font-bold text-slate-400">{{ $t->invoice_code }}</td>
                     <td class="px-6 py-4">
                         <div class="flex items-center space-x-3">
@@ -148,7 +170,7 @@
                 </tr>
                 @empty
                 <tr>
-                     <td colspan="6" class="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
+                     <td colspan="7" class="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
                         <span class="material-icons-round text-4xl mb-2 opacity-20">inbox</span>
                         <p>No transactions yet</p>
                     </td>
@@ -158,4 +180,38 @@
         </table>
     </div>
 </div>
+
+<script>
+    function updateAdminBulkActions() {
+        const checkboxes = document.querySelectorAll('.admin-transaction-checkbox:checked');
+        const bulkActions = document.getElementById('bulkAdminActions');
+        const selectedCount = document.getElementById('adminSelectedCount');
+        const bulkIds = document.getElementById('adminBulkIds');
+
+        selectedCount.textContent = checkboxes.length;
+
+        if (checkboxes.length > 0) {
+            bulkActions.classList.remove('hidden');
+            const ids = Array.from(checkboxes).map(cb => cb.value);
+            bulkIds.value = JSON.stringify(ids);
+        } else {
+            bulkActions.classList.add('hidden');
+        }
+    }
+
+    const selectAllCheckbox = document.getElementById('adminSelectAll');
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.admin-transaction-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = this.checked;
+            });
+            updateAdminBulkActions();
+        });
+    }
+
+    document.querySelectorAll('.admin-transaction-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', updateAdminBulkActions);
+    });
+</script>
 @endsection

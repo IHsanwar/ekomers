@@ -26,7 +26,7 @@
                     <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
                         <i class="fa-solid fa-store text-white"></i>
                     </div>
-                    <span class="sidebar-brand" x-show="sidebarOpen">ShopKu Admin</span>
+                    <span class="sidebar-brand" x-show="sidebarOpen">Dashboard Admin</span>
                 </a>
             </div>
 
@@ -47,7 +47,11 @@
                     <i class="fa-solid fa-box"></i>
                     <span x-show="sidebarOpen">Products</span>
                 </a>
-                
+                <a href="{{ route('admin.shipping-options.index') }}" 
+                   class="{{ request()->routeIs('admin.shipping-options.*') ? 'sidebar-link-active' : 'sidebar-link' }}">
+                    <i class="fa-solid fa-truck"></i>
+                    <span x-show="sidebarOpen">Shipping Options</span>
+                </a>
                 <div class="border-t border-slate-700 my-4 mx-4"></div>
                 
                 <a href="{{ route('product.index') }}" class="sidebar-link">

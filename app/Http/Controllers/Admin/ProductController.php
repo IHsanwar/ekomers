@@ -33,7 +33,6 @@ public function store(Request $request)
         'category_id' => 'required|exists:categories,id',
         'price' => 'required|numeric|min:0',
         'description' => 'required',
-        'whatsapp_link' => 'nullable|url',
         'quantity' => 'required|integer|min:0',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'images' => 'nullable|array',
@@ -53,7 +52,6 @@ public function store(Request $request)
         'slug' => Str::slug($request->name),
         'description' => $request->description,
         'price' => $request->price,
-        'whatsapp_link' => $request->whatsapp_link,
         'image_url' => $imagePath ? Storage::url($imagePath) : null, // simpan path URL publik
         'is_active' => $request->has('is_active'),
         'quantity' => $request->quantity,
@@ -85,16 +83,38 @@ public function store(Request $request)
     
     public function update(Request $request, Product $product)
 {
-    $validated = $request->validate([
+    $request->validate([
         'name' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
         'quantity' => 'required|integer|min:0',
         'description' => 'nullable|string',
         'category_id' => 'required|exists:categories,id',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        'images' => 'nullable|array',
-        'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
+
+    // Ambil semua data input kecuali gambar
+    $data = $request->only(['name', 'price', 'quantity', 'description', 'category_id']);
+    
+    // Update slug otomatis jika nama berubah
+    $data['slug'] = Str::slug($request->name);
+    
+    // Handle checkbox is_active
+    $data['is_active'] = $request->has('is_active');
+
+    // Handle Gambar Utama
+    if ($request->hasFile('image')) {
+        // Hapus file lama jika ada
+        if ($product->image_url) {
+            $oldPath = str_replace('/storage/', '', $product->image_url);
+            Storage::disk('public')->delete($oldPath);
+        }
+
+        $path = $request->file('image')->store('products', 'public');
+        $data['image_url'] = Storage::url($path);
+    }
+
+    // Eksekusi Update
+    $product->update($data);
 
     // 🔹 Hapus & ganti gambar utama bila ada yang baru
     if ($request->hasFile('image')) {
@@ -108,6 +128,9 @@ public function store(Request $request)
         $path = $request->file('image')->store('products', 'public');
         $validated['image_url'] = Storage::url($path);
     }
+
+    // 🔹 Normalize checkbox value for is_active
+    $validated['is_active'] = $request->has('is_active');
 
     // 🔹 Update data produk utama
     $product->update($validated);

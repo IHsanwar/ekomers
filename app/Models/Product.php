@@ -11,7 +11,6 @@ class Product extends Model
         'description',
         'price',
         'category_id',
-        'whatsapp_link',
         'image_url',
         'is_active',
         'slug',
