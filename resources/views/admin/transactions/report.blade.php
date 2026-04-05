@@ -32,7 +32,7 @@
                 <td>{{ $i+1 }}</td>
                 <td>{{ $tx->created_at->format('d/m/Y') }}</td>
                 <td>{{ $tx->user->name }}</td>
-                <td>{{ ucfirst($tx->status) }}</td>
+                <td>{{ \App\Helpers\TransactionStatusHelper::getLabel($tx->status) }}</td>
                 <td>Rp {{ number_format($tx->total_amount, 0, ',', '.') }}</td>
             </tr>
             @endforeach

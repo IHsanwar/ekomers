@@ -13,6 +13,12 @@ class TransactionService
      */
     public function updateStatus(Transaction $transaction, $status)
     {
+        // Validate status
+        $validStatuses = ['pending', 'confirmed', 'shipped', 'completed', 'cancelled', 'paid', 'failed', 'complained', 'returning', 'refunded'];
+        if (!in_array($status, $validStatuses)) {
+            throw new \InvalidArgumentException("Status '$status' tidak valid.");
+        }
+
         // Prevent double update if status is already the same (unless retrying failed)
         if ($transaction->status === $status) {
             return;
@@ -22,8 +28,8 @@ class TransactionService
         $transaction->status = $status;
         $transaction->save(); 
 
-        // If PAID, decrease stock & clear cart
-        if ($status === 'paid') {
+        // If PAID or new paid status, decrease stock & clear cart
+        if (in_array($status, ['paid', 'confirmed'])) {
             $this->handlePaidTransaction($transaction);
         }
     }

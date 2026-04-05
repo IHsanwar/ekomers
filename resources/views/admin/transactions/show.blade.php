@@ -51,16 +51,7 @@
                     <div>
                         <p class="text-gray-600 text-sm">Status Transaksi</p>
                         <p class="font-semibold">
-                            <span class="px-3 py-1 text-xs font-semibold rounded-full
-                                @if($transaction->status === 'pending') bg-yellow-100 text-yellow-800
-                                @elseif($transaction->status === 'confirmed') bg-blue-100 text-blue-800
-                                @elseif($transaction->status === 'shipped') bg-purple-100 text-purple-800
-                                @elseif($transaction->status === 'completed') bg-green-100 text-green-800
-                                @elseif($transaction->status === 'cancelled') bg-red-100 text-red-800
-                                @else bg-gray-100 text-gray-800
-                                @endif">
-                                {{ ucfirst($transaction->status) }}
-                            </span>
+                            <x-status-badge :status="$transaction->status" />
                         </p>
                     </div>
                 </div>

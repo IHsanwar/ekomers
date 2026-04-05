@@ -70,6 +70,7 @@
             'completed' => 'bg-green-100 text-green-700',
             'cancelled' => 'bg-red-100 text-red-700',
             'paid'=>'bg-green-100 text-green-700',
+            'failed'=>'bg-red-100 text-red-700',
         ];
 
         $statusIcons = [
@@ -79,6 +80,7 @@
             'completed' => 'fa-check-circle',
             'cancelled' => 'fa-times-circle',
             'paid' => 'fa-dollar-sign',
+            'failed' => 'fa-circle-xmark',
         ];
 
         $colorClass = $statusClasses[$tx->status] ?? 'bg-gray-100 text-gray-700';
@@ -87,7 +89,7 @@
 
     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $colorClass }}">
         <i class="fas {{ $icon }} mr-2"></i>
-        {{ ucfirst($tx->status) }}
+        {{ \App\Helpers\TransactionStatusHelper::getLabel($tx->status) }}
     </span>
 </td>
 
@@ -96,9 +98,11 @@
     <form method="POST" id="form-{{ $tx->id }}">
         @csrf
         <select onchange="updateStatus({{ $tx->id }}, this.value)" class="border rounded p-1">
-            <option disabled selected>Status</option>
-            @foreach(['pending', 'confirmed', 'shipped', 'completed', 'cancelled'] as $status)
-                <option value="{{ $status }}">{{ ucfirst($status) }}</option>
+            <option disabled selected>Change Status</option>
+            @foreach(\App\Helpers\TransactionStatusHelper::getAvailableStatuses() as $status)
+                <option value="{{ $status }}" {{ $tx->status === $status ? 'selected' : '' }}>
+                    {{ \App\Helpers\TransactionStatusHelper::getLabel($status) }}
+                </option>
             @endforeach
         </select>
     </form>
@@ -123,7 +127,7 @@ function updateStatus(transactionId, status) {
     if (!status) return;
     if (confirm(`Ubah status transaksi menjadi "${status}"?`)) {
         const form = document.getElementById(`form-${transactionId}`);
-        form.action = `/transactions/${transactionId}/${status}`;
+        form.action = `/admin/transactions/${transactionId}/${status}`;
         form.submit();
     }
 }

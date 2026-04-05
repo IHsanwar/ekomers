@@ -1,3 +1,4 @@
+@use('App\Helpers\TransactionStatusHelper')
 @extends('layouts.frontend')
 
 @section('content')
@@ -28,7 +29,13 @@
                 </div>
                 <div class="flex justify-between">
                     <span class="text-slate-500">Status</span>
-                    <x-badge variant="info">{{ ucfirst($transaction->status) }}</x-badge>
+                    @php
+                        $statusConfig = TransactionStatusHelper::getStatus($transaction->status);
+                    @endphp
+                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium {{ $statusConfig['bg_class'] }}">
+                        <span class="material-icons-round text-xs mr-1">{{ $statusConfig['icon'] }}</span>
+                        {{ $statusConfig['label'] }}
+                    </span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-slate-500">Date</span>
@@ -39,9 +46,12 @@
 
         <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="{{ route('transactions.print-invoice', $transaction->id) }}" class="btn-outline">
-                <i class="fa-solid fa-file-invoice mr-2"></i>Download Invoice
-            </a>
+            @if(TransactionStatusHelper::canDownloadInvoice($transaction->status))
+                <a href="{{ route('transactions.invoice.download', $transaction->id) }}" class="btn-outline">
+                    <i class="fa-solid fa-file-invoice mr-2"></i>Download Invoice
+                </a>
+            @endif
+            
             <a href="{{ route('product.index') }}" class="btn-primary">
                 <i class="fa-solid fa-cart-shopping mr-2"></i>Continue Shopping
             </a>

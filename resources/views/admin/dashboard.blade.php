@@ -1,5 +1,9 @@
 @extends('layouts.stitch-admin')
 
+@php
+    use App\Helpers\TransactionStatusHelper;
+@endphp
+
 @section('header', 'Dashboard Overview')
 
 @section('content')
@@ -121,50 +125,41 @@
                     </td>
                     <td class="px-6 py-4 text-sm font-bold">Rp {{ number_format($t->total_amount, 0, ',', '.') }}</td>
                     <td class="px-6 py-4">
-                        @php
-                            $statusColors = [
-                                'pending' => 'bg-amber-100 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400',
-                                'confirmed' => 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400',
-                                'shipped' => 'bg-purple-100 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400',
-                                'completed' => 'bg-secondary/10 text-secondary',
-                                'cancelled' => 'bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400',
-                            ];
-                            $statusClass = $statusColors[$t->status] ?? 'bg-slate-100 text-slate-600';
-                        @endphp
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusClass }}">
-                            <span class="w-1 h-1 rounded-full mr-2 {{ str_replace(['/10','/20'], '', $statusClass) }} bg-current opacity-50"></span>
-                            {{ ucfirst($t->status) }}
-                        </span>
+                        <x-status-badge :status="$t->status" />
                     </td>
                     <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
                         {{ $t->created_at->format('d M Y, H:i') }}
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <div class="flex items-center justify-end space-x-2">
-                             <form action="{{ route('admin.transactions.update-status', [$t, 'confirmed']) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-blue-500" title="Confirm">
-                                    <span class="material-icons-round text-sm">check</span>
-                                </button>
-                            </form>
-                            <form action="{{ route('admin.transactions.update-status', [$t, 'shipped']) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-purple-500" title="Ship">
-                                    <span class="material-icons-round text-sm">local_shipping</span>
-                                </button>
-                            </form>
-                            <form action="{{ route('admin.transactions.update-status', [$t, 'completed']) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-secondary" title="Complete">
-                                    <span class="material-icons-round text-sm">check_circle</span>
-                                </button>
-                            </form>
-                            <form action="{{ route('admin.transactions.update-status', [$t, 'cancelled']) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-red-500" title="Cancel">
-                                    <span class="material-icons-round text-sm">cancel</span>
-                                </button>
-                            </form>
+                        <div class="flex items-center justify-end space-x-2 flex-wrap gap-1.5">
+                            @php
+                                $currentStatus = $t->status;
+                                $availableStatuses = TransactionStatusHelper::getAvailableStatuses();
+                            @endphp
+                            @foreach($availableStatuses as $status)
+                                @if($status !== $currentStatus)
+                                    <form action="{{ route('admin.transactions.update-status', [$t, $status]) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" 
+                                                class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+                                                title="{{ TransactionStatusHelper::getLabel($status) }}"
+                                                onclick="return confirm('Update status ke {{ ucfirst($status) }}?')">
+                                            <span class="material-icons-round text-sm text-{{ TransactionStatusHelper::getStatus($status)['color'] }}-500">
+                                                {{ TransactionStatusHelper::getIcon($status) }}
+                                            </span>
+                                        </button>
+                                    </form>
+                                @endif
+                            @endforeach
+                            
+                            <!-- Download Invoice Button -->
+                            @if(TransactionStatusHelper::canDownloadInvoice($currentStatus))
+                                <a href="{{ route('transactions.invoice.download', $t->id) }}" 
+                                   class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-slate-500"
+                                   title="Download Invoice">
+                                    <span class="material-icons-round text-sm">download</span>
+                                </a>
+                            @endif
                         </div>
                     </td>
                 </tr>

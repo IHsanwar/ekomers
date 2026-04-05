@@ -9,8 +9,17 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\TransactionItems;
 use App\Models\Product;
+use App\Services\TransactionService;
+
 class DashboardController extends Controller
 {
+    protected $transactionService;
+
+    public function __construct(TransactionService $transactionService)
+    {
+        $this->transactionService = $transactionService;
+    }
+
      public function index()
     {
         // Statistik utama
@@ -59,13 +68,14 @@ class DashboardController extends Controller
 
     public function updateStatus(Transaction $transaction, $status)
     {
-        $validStatuses = ['pending', 'confirmed', 'shipped', 'completed', 'cancelled'];
+        $validStatuses = ['pending', 'confirmed', 'shipped', 'completed', 'cancelled', 'paid', 'failed', 'complained', 'returning', 'refunded'];
 
         if (!in_array($status, $validStatuses)) {
             return back()->with('error', 'Status tidak valid.');
         }
 
-        $transaction->update(['status' => $status]);
+        // Gunakan TransactionService untuk update status dengan business logic yang tepat
+        $this->transactionService->updateStatus($transaction, $status);
 
         return back()->with('success', "Status transaksi #{$transaction->invoice_code} diubah menjadi {$status}.");
     }

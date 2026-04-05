@@ -13,6 +13,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Services\TransactionService;
+use App\Helpers\TransactionStatusHelper;
+
 class TransactionController extends Controller
 {
     public function checkout(Request $request)
@@ -107,21 +110,26 @@ class TransactionController extends Controller
     return $pdf->download("laporan-transaksi-$startDate-$endDate.pdf");
 }
     public function generateInvoice(Transaction $transaction)
-{
-    $this->authorize('view', $transaction); // pastikan user hanya bisa lihat miliknya sendiri
+    {
+        // User biasa hanya bisa lihat invoice miliknya sendiri
+        // Admin bisa lihat semua invoice
+        if ($transaction->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
+            abort(403, 'Unauthorized');
+        }
 
-    $transaction->load('user', 'items.product');
+        $transaction->load('user', 'items.product');
 
-    $pdf = Pdf::loadView('user.transactions.invoice', compact('transaction'))
-              ->setPaper('A4', 'portrait');
+        $pdf = Pdf::loadView('admin.transactions.invoice', compact('transaction'))
+                  ->setPaper('A4', 'portrait');
 
-    return $pdf->download("invoice-{$transaction->id}.pdf");
-}
+        return $pdf->download("invoice-{$transaction->invoice_code}.pdf");
+    }
 
     public function printInvoice(Transaction $transaction)
     {
-        // Pastikan hanya pemilik transaksi yang bisa melihat
-        if ($transaction->user_id !== auth()->id()) {
+        // User biasa hanya bisa print invoice miliknya sendiri
+        // Admin bisa print semua invoice
+        if ($transaction->user_id !== auth()->id() && !auth()->user()->isAdmin()) {
             abort(403, 'Unauthorized');
         }
 

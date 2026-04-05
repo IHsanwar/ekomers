@@ -1,3 +1,4 @@
+@use('App\Helpers\TransactionStatusHelper')
 @extends('layouts.frontend')
 
 @section('content')
@@ -15,30 +16,13 @@
                 <p class="text-slate-500 mt-1">Order #{{ $transaction->id }}</p>
             </div>
             <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium
-                @if($transaction->status === 'completed')
-                    bg-green-100 text-green-800
-                @elseif($transaction->status === 'pending')
-                    bg-yellow-100 text-yellow-800
-                @elseif($transaction->status === 'failed')
-                    bg-red-100 text-red-800
-                @elseif($transaction->status === 'paid')
-                    bg-gray-100 text-green-800
-                @else
-                    bg-slate-100 text-slate-800
-                @endif
+                @php
+                    $statusConfig = TransactionStatusHelper::getStatus($transaction->status);
+                @endphp
+                {{ $statusConfig['bg_class'] }}
             ">
-                <i class="fa-solid 
-                @if($transaction->status === 'completed')
-                    fa-circle-check mr-2
-                @elseif($transaction->status === 'pending')
-                    fa-clock mr-2
-                @elseif($transaction->status === 'failed')
-                    fa-circle-xmark mr-2
-                @elseif($transaction->status === 'paid')
-                    fa-check-circle mr-2
-                @endif
-                "></i>
-                {{ ucfirst($transaction->status) }}
+                <span class="material-icons-round text-sm mr-1.5">{{ $statusConfig['icon'] }}</span>
+                {{ $statusConfig['label'] }}
             </span>
         </div>
     </div>
@@ -146,10 +130,23 @@
                 <i class="fa-solid fa-info-circle mr-2"></i>Need help? Contact our support team for assistance.
             </p>
             <div class="flex gap-3 flex-wrap">
-                @if($transaction->status === 'completed')
+                
+                @if(TransactionStatusHelper::canDownloadInvoice($transaction->status))
                     <a href="{{ route('transactions.invoice.download', $transaction->id) }}" 
                        class="btn-primary btn-sm">
                         <i class="fa-solid fa-download mr-1.5"></i>Download Invoice
+                    </a>
+                @endif
+                
+                @if($transaction->status === 'completed' && !$transaction->complaint)
+                    <a href="{{ route('frontend.complaints.create', $transaction->id) }}" class="btn-outline btn-sm text-amber-600 hover:bg-amber-50">
+                        <i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Ajukan Komplain
+                    </a>
+                @endif
+                
+                @if($transaction->complaint)
+                    <a href="{{ route('frontend.complaints.show', $transaction->complaint->id) }}" class="btn-outline btn-sm text-blue-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-eye mr-1.5"></i>Status Komplain: {{ ucfirst($transaction->complaint->status) }}
                     </a>
                 @endif
                 

@@ -19,7 +19,7 @@
         <p><strong>Kode Invoice:</strong> {{ $transaction->invoice_code }}</p>
         <p><strong>Nama Pembeli:</strong> {{ $transaction->user->name }}</p>
         <p><strong>Tanggal:</strong> {{ $transaction->created_at->format('d M Y, H:i') }}</p>
-        <p><strong>Status:</strong> {{ ucfirst($transaction->status) }}</p>
+        <p><strong>Status:</strong> {{ \App\Helpers\TransactionStatusHelper::getLabel($transaction->status) }}</p>
 
         <table>
             <thead>

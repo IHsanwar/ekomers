@@ -52,6 +52,11 @@
                     <i class="fa-solid fa-truck"></i>
                     <span x-show="sidebarOpen">Shipping Options</span>
                 </a>
+                <a href="{{ route('admin.complaints.index') }}" 
+                   class="{{ request()->routeIs('admin.complaints.*') ? 'sidebar-link-active' : 'sidebar-link' }}">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span x-show="sidebarOpen">Manajemen Komplain</span>
+                </a>
                 <div class="border-t border-slate-700 my-4 mx-4"></div>
                 
                 <a href="{{ route('product.index') }}" class="sidebar-link">

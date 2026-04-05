@@ -77,6 +77,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/transactions/{transaction}/invoice/print', [TransactionController::class, 'printInvoice'])
         ->name('transactions.invoice.print');
 
+    // Complaints
+    Route::get('/transactions/{transaction}/complaints/create', [\App\Http\Controllers\Frontend\ComplaintController::class, 'create'])
+        ->name('frontend.complaints.create');
+    Route::post('/transactions/{transaction}/complaints', [\App\Http\Controllers\Frontend\ComplaintController::class, 'store'])
+        ->name('frontend.complaints.store');
+    Route::get('/complaints/{complaint}', [\App\Http\Controllers\Frontend\ComplaintController::class, 'show'])
+        ->name('frontend.complaints.show');
+
     // User Transactions
     Route::get('/user/transactions', [TransactionUserController::class, 'userTransactions'])
         ->name('user.transactions.index');
@@ -132,6 +140,11 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])
         Route::post('/shipping-options', [ShippingOptionController::class, 'store'])->name('shipping-options.store');
         Route::put('/shipping-options/{id}', [ShippingOptionController::class, 'update'])->name('shipping-options.update');
         Route::delete('/shipping-options/{id}', [ShippingOptionController::class, 'destroy'])->name('shipping-options.destroy');
+
+        // Complaints Management
+        Route::get('/complaints', [\App\Http\Controllers\Admin\ComplaintController::class, 'index'])->name('complaints.index');
+        Route::get('/complaints/{complaint}', [\App\Http\Controllers\Admin\ComplaintController::class, 'show'])->name('complaints.show');
+        Route::post('/complaints/{complaint}/action', [\App\Http\Controllers\Admin\ComplaintController::class, 'action'])->name('complaints.action');
     });
 
 /*

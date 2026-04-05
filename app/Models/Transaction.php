@@ -60,6 +60,11 @@ class Transaction extends Model
     {
         return $query->where('status', 'completed');
     }
+
+    public function complaint()
+    {
+        return $this->hasOne(Complaint::class);
+    }
     public function deleteRecords()
     {
         $this->items()->delete();
