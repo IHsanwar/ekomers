@@ -14,8 +14,35 @@
     </div>
 </div>
 
-<form action="{{ route('admin.products.update', $product) }}" 
-      method="POST" 
+<!-- Toast Notifications -->
+@if ($errors->any())
+    <div class="toast-error mb-6">
+        <i class="fa-solid fa-exclamation-circle toast-icon"></i>
+        <div>
+            <div class="toast-title">Validation Error</div>
+            <div class="toast-description">
+                @if (count($errors) == 1)
+                    {{ $errors->first() }}
+                @else
+                    {{ count($errors) }} validation errors found
+                @endif
+            </div>
+        </div>
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="toast-success mb-6">
+        <i class="fa-solid fa-check toast-icon"></i>
+        <div>
+            <div class="toast-title">Success</div>
+            <div class="toast-description">{{ session('success') }}</div>
+        </div>
+    </div>
+@endif
+
+<form action="{{ route('admin.products.update', $product) }}"
+      method="POST"
       enctype="multipart/form-data">
     @csrf
     @method('PUT')
@@ -33,22 +60,30 @@
                 <div class="p-6 space-y-4">
                     <div>
                         <x-input-label for="name" value="Product Name" />
-                        <x-text-input id="name" name="name" type="text" class="mt-1.5 w-full" 
+                        <x-text-input id="name" name="name" type="text" class="mt-1.5 w-full @error('name') input-error @enderror"
                                       :value="old('name', $product->name)" required />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        @error('name')
+                            <p class="text-red-600 text-xs mt-2 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>{{ $message }}
+                            </p>
+                        @enderror
                     </div>
 
                     <div>
                         <x-input-label for="description" value="Description" />
-                        <textarea id="description" name="description" rows="4" 
-                                  class="input mt-1.5 w-full" required>{{ old('description', $product->description) }}</textarea>
-                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                        <textarea id="description" name="description" rows="4"
+                                  class="input mt-1.5 w-full @error('description') input-error @enderror" required>{{ old('description', $product->description) }}</textarea>
+                        @error('description')
+                            <p class="text-red-600 text-xs mt-2 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>{{ $message }}
+                            </p>
+                        @enderror
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <x-input-label for="category_id" value="Category" />
-                            <select id="category_id" name="category_id" class="input mt-1.5 w-full" required>
+                            <select id="category_id" name="category_id" class="input mt-1.5 w-full @error('category_id') input-error @enderror" required>
                                 <option value="">Select category</option>
                                 @foreach($categories as $cat)
                                     <option value="{{ $cat->id }}" {{ (old('category_id', $product->category_id) == $cat->id) ? 'selected' : '' }}>
@@ -56,23 +91,35 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+                            @error('category_id')
+                                <p class="text-red-600 text-xs mt-2 flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-exclamation"></i>{{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                         <div>
                             <x-input-label for="price" value="Price (Rp)" />
-                            <x-text-input id="price" name="price" type="number" class="mt-1.5 w-full" 
+                            <x-text-input id="price" name="price" type="number" class="mt-1.5 w-full @error('price') input-error @enderror"
                                           :value="old('price', $product->price)" min="0" step="0.01" required />
-                            <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                            @error('price')
+                                <p class="text-red-600 text-xs mt-2 flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-exclamation"></i>{{ $message }}
+                                </p>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <x-input-label for="quantity" value="Stock Quantity" />
-                            <x-text-input id="quantity" name="quantity" type="number" class="mt-1.5 w-full" 
+                            <x-text-input id="quantity" name="quantity" type="number" class="mt-1.5 w-full @error('quantity') input-error @enderror"
                                           :value="old('quantity', $product->quantity)" min="0" required />
-                            <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                            @error('quantity')
+                                <p class="text-red-600 text-xs mt-2 flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-exclamation"></i>{{ $message }}
+                                </p>
+                            @enderror
                         </div>
 
                     </div>
@@ -90,7 +137,12 @@
                     <div>
                         <x-input-label for="image" value="Main Image" />
                         <input type="file" id="image" name="image" accept="image/*"
-                               class="mt-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200">
+                               class="mt-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 @error('image') input-error @enderror">
+                        @error('image')
+                            <p class="text-red-600 text-xs mt-2 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>{{ $message }}
+                            </p>
+                        @enderror
                         @if($product->image_url)
                             <div class="mt-3">
                                 <p class="text-xs text-slate-500 mb-2">Current image:</p>
@@ -102,9 +154,14 @@
                     <div>
                         <x-input-label for="images" value="Gallery Images" />
                         <input type="file" id="images" name="images[]" accept="image/*" multiple
-                               class="mt-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200">
+                               class="mt-1.5 w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 @error('images') input-error @enderror">
                         <p class="text-xs text-slate-500 mt-1">You can select multiple images</p>
-                        
+                        @error('images')
+                            <p class="text-red-600 text-xs mt-2 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-exclamation"></i>{{ $message }}
+                            </p>
+                        @enderror
+
                         @if($product->images && $product->images->count() > 0)
                             <div class="mt-3">
                                 <p class="text-xs text-slate-500 mb-2">Current gallery:</p>

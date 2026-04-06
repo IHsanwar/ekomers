@@ -65,9 +65,9 @@
                     <span class="material-icons-round mr-3 group-hover:text-primary-admin">shopping_bag</span>
                     <span class="text-sm font-medium">Orders</span>
                 </a>
-                <a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
-                    <span class="material-icons-round mr-3 group-hover:text-primary-admin">group</span>
-                    <span class="text-sm font-medium">Customers</span>
+                <a class="{{ request()->routeIs('admin.users.*') ? 'sidebar-item-active text-primary-admin' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800' }} flex items-center px-4 py-3 group transition-colors rounded-lg" href="{{ route('admin.users.index') }}">
+                    <span class="material-icons-round mr-3 {{ request()->routeIs('admin.users.*') ? '' : 'group-hover:text-primary-admin' }}">group</span>
+                    <span class="text-sm font-medium">Users</span>
                 </a>
                 <div class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800">
                     <a class="{{ request()->routeIs('profile.*') ? 'sidebar-item-active text-primary-admin' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800' }} flex items-center px-4 py-3 group transition-colors rounded-lg" href="{{ route('profile.edit') }}">

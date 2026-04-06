@@ -17,6 +17,12 @@ class ShippingOptionController extends Controller
         return view('admin.shipping_options.create');
     }
 
+    public function edit($id)
+    {
+        $shippingOption = ShippingOption::findOrFail($id);
+        return view('admin.shipping_options.edit', compact('shippingOption'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([

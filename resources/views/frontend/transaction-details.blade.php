@@ -21,7 +21,7 @@
                 @endphp
                 {{ $statusConfig['bg_class'] }}
             ">
-                <span class="material-icons-round text-sm mr-1.5">{{ $statusConfig['icon'] }}</span>
+                <i class="fa-solid {{ $statusConfig['icon_fa'] }} text-sm mr-1.5"></i>
                 {{ $statusConfig['label'] }}
             </span>
         </div>

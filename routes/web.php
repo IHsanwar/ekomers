@@ -11,8 +11,11 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Controllers\ShippingOptionController;
+use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 /*
 |--------------------------------------------------------------------------
 | Public
@@ -117,7 +120,7 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])
     ->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+    
         // Transactions Management
         Route::get('/transactions', [DashboardController::class, 'transactionPage'])->name('transactions.index');
         Route::get('/transactions/{transaction}', [DashboardController::class, 'transactionDetail'])->name('transactions.show');
@@ -137,6 +140,7 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])
 
         Route::get('/shipping-options', [ShippingOptionController::class, 'index'])->name('shipping-options.index');
         Route::get('/shipping-options/create', [ShippingOptionController::class, 'create'])->name('shipping-options.create');
+        Route::get('/shipping-options/{id}/edit', [ShippingOptionController::class, 'edit'])->name('shipping-options.edit');
         Route::post('/shipping-options', [ShippingOptionController::class, 'store'])->name('shipping-options.store');
         Route::put('/shipping-options/{id}', [ShippingOptionController::class, 'update'])->name('shipping-options.update');
         Route::delete('/shipping-options/{id}', [ShippingOptionController::class, 'destroy'])->name('shipping-options.destroy');
@@ -145,6 +149,13 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])
         Route::get('/complaints', [\App\Http\Controllers\Admin\ComplaintController::class, 'index'])->name('complaints.index');
         Route::get('/complaints/{complaint}', [\App\Http\Controllers\Admin\ComplaintController::class, 'show'])->name('complaints.show');
         Route::post('/complaints/{complaint}/action', [\App\Http\Controllers\Admin\ComplaintController::class, 'action'])->name('complaints.action');
+
+        // User Management
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::post('/users/{user}/role', [UserController::class, 'updateRole'])->name('users.update-role');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::post('/users/bulk-delete', [UserController::class, 'bulkDelete'])->name('users.bulk-delete');
     });
 
 /*

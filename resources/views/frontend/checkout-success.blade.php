@@ -33,7 +33,7 @@
                         $statusConfig = TransactionStatusHelper::getStatus($transaction->status);
                     @endphp
                     <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium {{ $statusConfig['bg_class'] }}">
-                        <span class="material-icons-round text-xs mr-1">{{ $statusConfig['icon'] }}</span>
+                        <i class="fa-solid {{ $statusConfig['icon_fa'] }} text-xs mr-1"></i>
                         {{ $statusConfig['label'] }}
                     </span>
                 </div>

@@ -1,80 +1,79 @@
-@extends('layouts.stitch-admin')
+@extends('layouts.admin')
 
 @php
     use App\Helpers\TransactionStatusHelper;
 @endphp
 
-@section('header', 'Dashboard Overview')
+@section('page-title', 'Dashboard Overview')
 
 @section('content')
 <!-- Stats Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
     <!-- Total Transactions -->
-    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+    <div class="stat-card">
         <div class="flex justify-between items-start mb-4">
-            <div class="p-3 bg-blue-500/10 rounded-xl">
-                <span class="material-icons-round text-blue-500">receipt_long</span>
+            <div class="stat-card-icon bg-blue-100 text-blue-600">
+                <i class="fa-solid fa-receipt"></i>
             </div>
-            <!-- Placeholder trend -->
-            <span class="flex items-center text-secondary text-xs font-bold">
-                <span class="material-icons-round text-sm mr-1">trending_up</span>
-                +5%
+            <span class="flex items-center text-blue-600 text-xs font-bold">
+                <i class="fa-solid fa-arrow-trend-up mr-1"></i>+5%
             </span>
         </div>
-        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Transactions</p>
-        <h3 class="text-2xl font-bold mt-1">{{ number_format($totalTransactions) }}</h3>
+        <p class="stat-card-label">Total Transactions</p>
+        <h3 class="stat-card-value">{{ number_format($totalTransactions) }}</h3>
     </div>
 
     <!-- Total Revenue -->
-    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+    <div class="stat-card">
         <div class="flex justify-between items-start mb-4">
-            <div class="p-3 bg-secondary/10 rounded-xl">
-                <span class="material-icons-round text-secondary">payments</span>
+            <div class="stat-card-icon bg-emerald-100 text-emerald-600">
+                <i class="fa-solid fa-wallet"></i>
             </div>
-            <span class="flex items-center text-secondary text-xs font-bold">
-                <span class="material-icons-round text-sm mr-1">trending_up</span>
-                +12%
+            <span class="flex items-center text-emerald-600 text-xs font-bold">
+                <i class="fa-solid fa-arrow-trend-up mr-1"></i>+12%
             </span>
         </div>
-        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Revenue</p>
-        <h3 class="text-2xl font-bold mt-1">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
+        <p class="stat-card-label">Total Revenue</p>
+        <h3 class="stat-card-value">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
     </div>
 
     <!-- Pending Orders -->
-    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+    <div class="stat-card">
         <div class="flex justify-between items-start mb-4">
-            <div class="p-3 bg-amber-500/10 rounded-xl">
-                <span class="material-icons-round text-amber-500">pending_actions</span>
+            <div class="stat-card-icon bg-amber-100 text-amber-600">
+                <i class="fa-solid fa-clock"></i>
             </div>
-            <span class="flex items-center text-amber-500 text-xs font-bold">
-                <span class="material-icons-round text-sm mr-1">schedule</span>
-                Action Needed
+            <span class="flex items-center text-amber-600 text-xs font-bold">
+                <i class="fa-solid fa-exclamation mr-1"></i>Action Needed
             </span>
         </div>
-        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Orders</p>
-        <h3 class="text-2xl font-bold mt-1">{{ number_format($pendingCount) }}</h3>
+        <p class="stat-card-label">Pending Orders</p>
+        <h3 class="stat-card-value">{{ number_format($pendingCount) }}</h3>
     </div>
 
     <!-- Completed Orders -->
-    <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+    <div class="stat-card">
         <div class="flex justify-between items-start mb-4">
-            <div class="p-3 bg-primary-admin/10 rounded-xl">
-                <span class="material-icons-round text-primary-admin">check_circle</span>
+            <div class="stat-card-icon bg-green-100 text-green-600">
+                <i class="fa-solid fa-check-circle"></i>
             </div>
-            <span class="flex items-center text-secondary text-xs font-bold">
-                <span class="material-icons-round text-sm mr-1">verified</span>
-                Success
+            <span class="flex items-center text-green-600 text-xs font-bold">
+                <i class="fa-solid fa-check mr-1"></i>Success
             </span>
         </div>
-        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Completed Orders</p>
-        <h3 class="text-2xl font-bold mt-1">{{ number_format($completedCount) }}</h3>
+        <p class="stat-card-label">Completed Orders</p>
+        <h3 class="stat-card-value">{{ number_format($completedCount) }}</h3>
     </div>
 </div>
 
-<!-- Recent Transactions -->
-<div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-    <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
-        <h4 class="font-bold text-lg">Recent Transactions</h4>
+<!-- Recent Transactions Section -->
+<div class="card">
+    <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <h3 class="font-semibold text-slate-900 text-lg">
+                <i class="fa-solid fa-list mr-2 text-slate-400"></i>Recent Transactions
+            </h3>
+        </div>
         <div class="flex gap-3">
             <!-- Bulk Delete Actions -->
             <div id="bulkAdminActions" class="hidden flex gap-3 items-center">
@@ -82,92 +81,86 @@
                 <form id="adminBulkDeleteForm" action="{{ route('admin.transactions.bulk-delete') }}" method="POST" class="inline">
                     @csrf
                     <input type="hidden" id="adminBulkIds" name="transaction_ids" value="">
-                    <button type="submit" class="px-3 py-1 text-sm bg-red-100 text-red-600 rounded hover:bg-red-200 transition" 
-                            onclick="return confirm('Hapus transaksi terpilih secara permanen?')">
-                        <i class="fa-solid fa-trash mr-1.5"></i>Delete Selected
+                    <button type="submit" class="btn btn-destructive btn-sm"
+                            onclick="return confirm('Delete selected transaction(s) permanently?')">
+                        <i class="fa-solid fa-trash"></i>Delete
                     </button>
                 </form>
             </div>
-            <button class="text-primary-admin text-sm font-bold hover:underline">View All</button>
+            <a href="{{ route('admin.transactions.index') }}" class="btn btn-outline btn-sm">
+                <i class="fa-solid fa-arrow-right"></i>View All
+            </a>
         </div>
     </div>
+
     <div class="overflow-x-auto">
-        <table class="w-full text-left">
-            <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
+        <table class="table">
+            <thead class="table-header bg-slate-50">
                 <tr>
-                    <th class="px-6 py-4 w-12">
-                        <input type="checkbox" id="adminSelectAll" class="rounded" />
+                    <th class="table-head w-12">
+                        <input type="checkbox" id="adminSelectAll" class="w-4 h-4 rounded" />
                     </th>
-                    <th class="px-6 py-4">Invoice</th>
-                    <th class="px-6 py-4">Customer</th>
-                    <th class="px-6 py-4">Total</th>
-                    <th class="px-6 py-4">Status</th>
-                    <th class="px-6 py-4">Date</th>
-                    <th class="px-6 py-4 text-right">Action</th>
+                    <th class="table-head">Invoice</th>
+                    <th class="table-head">Customer</th>
+                    <th class="table-head">Amount</th>
+                    <th class="table-head">Status</th>
+                    <th class="table-head">Shipping</th>
+                    <th class="table-head">Date</th>
+                    <th class="table-head text-right">Actions</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                @forelse($recentTransactions as $t)
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors admin-transaction-row">
-                    <td class="px-6 py-4">
-                        @if(in_array($t->status, ['cancelled', 'completed', 'failed']))
-                            <input type="checkbox" class="admin-transaction-checkbox" value="{{ $t->id }}" />
+            <tbody class="table-body">
+                @forelse($transactions as $transaction)
+                <tr class="table-row">
+                    <td class="table-cell">
+                        <input type="checkbox" class="admin-checkbox w-4 h-4 rounded" value="{{ $transaction->id }}" />
+                    </td>
+                    <td class="table-cell">
+                        <a href="{{ route('admin.transactions.show', $transaction->id) }}" class="text-primary-600 hover:underline font-semibold">
+                            {{ $transaction->invoice_code }}
+                        </a>
+                    </td>
+                    <td class="table-cell">
+                        <span class="font-medium text-slate-900">{{ $transaction->user->name }}</span>
+                    </td>
+                    <td class="table-cell">
+                        <span class="font-semibold text-emerald-600">Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}</span>
+                    </td>
+                    <td class="table-cell">
+                        @php
+                            $status = TransactionStatusHelper::getStatus($transaction->status);
+                        @endphp
+                        <span class="{{ 'badge ' . $status['badge_class'] }}">
+                            <i class="{{ 'fa-solid ' . $status['icon_fa'] . ' text-xs mr-1' }}"></i>{{ $status['label'] }}
+                        </span>
+                    </td>
+                    <td class="table-cell">
+                        @if($transaction->shipping_code)
+                            <div>
+                                <p class="font-semibold text-emerald-600">{{ $transaction->shipping_code }}</p>
+                                <p class="text-xs text-slate-500">{{ ucfirst(str_replace('_', ' ', $transaction->shipping_status)) }}</p>
+                            </div>
+                        @else
+                            <span class="text-slate-400 text-sm">-</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4 text-sm font-bold text-slate-400">{{ $t->invoice_code }}</td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">
-                                <span class="material-icons-round text-slate-500 text-sm">person</span>
-                            </div>
-                            <span class="text-sm font-medium">{{ $t->user?->name ?? 'User #' . $t->user_id }}</span>
-                        </div>
+                    <td class="table-cell text-sm text-slate-600">
+                        {{ $transaction->created_at->format('d M Y, H:i') }}
                     </td>
-                    <td class="px-6 py-4 text-sm font-bold">Rp {{ number_format($t->total_amount, 0, ',', '.') }}</td>
-                    <td class="px-6 py-4">
-                        <x-status-badge :status="$t->status" />
-                    </td>
-                    <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
-                        {{ $t->created_at->format('d M Y, H:i') }}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <div class="flex items-center justify-end space-x-2 flex-wrap gap-1.5">
-                            @php
-                                $currentStatus = $t->status;
-                                $availableStatuses = TransactionStatusHelper::getAvailableStatuses();
-                            @endphp
-                            @foreach($availableStatuses as $status)
-                                @if($status !== $currentStatus)
-                                    <form action="{{ route('admin.transactions.update-status', [$t, $status]) }}" method="POST" class="inline">
-                                        @csrf
-                                        <button type="submit" 
-                                                class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
-                                                title="{{ TransactionStatusHelper::getLabel($status) }}"
-                                                onclick="return confirm('Update status ke {{ ucfirst($status) }}?')">
-                                            <span class="material-icons-round text-sm text-{{ TransactionStatusHelper::getStatus($status)['color'] }}-500">
-                                                {{ TransactionStatusHelper::getIcon($status) }}
-                                            </span>
-                                        </button>
-                                    </form>
-                                @endif
-                            @endforeach
-                            
-                            <!-- Download Invoice Button -->
-                            @if(TransactionStatusHelper::canDownloadInvoice($currentStatus))
-                                <a href="{{ route('transactions.invoice.download', $t->id) }}" 
-                                   class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors text-slate-500"
-                                   title="Download Invoice">
-                                    <span class="material-icons-round text-sm">download</span>
-                                </a>
-                            @endif
-                        </div>
+                    <td class="table-cell text-right">
+                        <a href="{{ route('admin.transactions.show', $transaction->id) }}" class="btn btn-ghost btn-sm">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                     <td colspan="7" class="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
-                        <span class="material-icons-round text-4xl mb-2 opacity-20">inbox</span>
-                        <p>No transactions yet</p>
+                    <td colspan="8" class="table-cell">
+                        <div class="empty-state py-12">
+                            <i class="fa-solid fa-inbox empty-state-icon"></i>
+                            <h3 class="empty-state-title">No transactions yet</h3>
+                            <p class="empty-state-description">Transactions will appear here</p>
+                        </div>
                     </td>
                 </tr>
                 @endforelse
@@ -177,36 +170,50 @@
 </div>
 
 <script>
-    function updateAdminBulkActions() {
-        const checkboxes = document.querySelectorAll('.admin-transaction-checkbox:checked');
-        const bulkActions = document.getElementById('bulkAdminActions');
-        const selectedCount = document.getElementById('adminSelectedCount');
-        const bulkIds = document.getElementById('adminBulkIds');
+// Handle select all checkbox
+const adminSelectAllCheckbox = document.getElementById('adminSelectAll');
+const adminCheckboxes = document.querySelectorAll('.admin-checkbox');
 
-        selectedCount.textContent = checkboxes.length;
-
-        if (checkboxes.length > 0) {
-            bulkActions.classList.remove('hidden');
-            const ids = Array.from(checkboxes).map(cb => cb.value);
-            bulkIds.value = JSON.stringify(ids);
-        } else {
-            bulkActions.classList.add('hidden');
-        }
-    }
-
-    const selectAllCheckbox = document.getElementById('adminSelectAll');
-    if (selectAllCheckbox) {
-        selectAllCheckbox.addEventListener('change', function() {
-            const checkboxes = document.querySelectorAll('.admin-transaction-checkbox');
-            checkboxes.forEach(cb => {
-                cb.checked = this.checked;
-            });
-            updateAdminBulkActions();
+if (adminSelectAllCheckbox) {
+    adminSelectAllCheckbox.addEventListener('change', function() {
+        adminCheckboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
         });
-    }
-
-    document.querySelectorAll('.admin-transaction-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', updateAdminBulkActions);
+        updateAdminBulkActions();
     });
+}
+
+// Handle individual checkbox changes
+adminCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const allChecked = Array.from(adminCheckboxes).every(cb => cb.checked);
+        const someChecked = Array.from(adminCheckboxes).some(cb => cb.checked);
+
+        if (adminSelectAllCheckbox) {
+            adminSelectAllCheckbox.checked = allChecked;
+            adminSelectAllCheckbox.indeterminate = someChecked && !allChecked;
+        }
+
+        updateAdminBulkActions();
+    });
+});
+
+// Update bulk actions display
+function updateAdminBulkActions() {
+    const checkedBoxes = document.querySelectorAll('.admin-checkbox:checked');
+    const bulkActions = document.getElementById('bulkAdminActions');
+    const selectedCount = document.getElementById('adminSelectedCount');
+    const bulkIds = document.getElementById('adminBulkIds');
+
+    selectedCount.textContent = checkedBoxes.length;
+
+    if (checkedBoxes.length > 0) {
+        bulkActions.classList.remove('hidden');
+        const ids = Array.from(checkedBoxes).map(cb => cb.value);
+        bulkIds.value = JSON.stringify(ids);
+    } else {
+        bulkActions.classList.add('hidden');
+    }
+}
 </script>
 @endsection

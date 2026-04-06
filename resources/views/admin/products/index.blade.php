@@ -14,6 +14,37 @@
     </a>
 </div>
 
+<!-- Toast Notifications -->
+@if(session('success'))
+    <div id="toast-success" class="toast-success mb-6 flex items-start justify-between">
+        <div class="flex items-start gap-3">
+            <i class="fa-solid fa-check toast-icon"></i>
+            <div>
+                <div class="toast-title">Success</div>
+                <div class="toast-description">{{ session('success') }}</div>
+            </div>
+        </div>
+        <button onclick="dismissToast('toast-success')" class="ml-4 text-current opacity-50 hover:opacity-100">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div id="toast-error" class="toast-error mb-6 flex items-start justify-between">
+        <div class="flex items-start gap-3">
+            <i class="fa-solid fa-exclamation-circle toast-icon"></i>
+            <div>
+                <div class="toast-title">Error</div>
+                <div class="toast-description">{{ session('error') }}</div>
+            </div>
+        </div>
+        <button onclick="dismissToast('toast-error')" class="ml-4 text-current opacity-50 hover:opacity-100">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+@endif
+
 <!-- Products Grid -->
 @if($products->count() > 0)
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -36,7 +67,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <!-- Product Info -->
                 <div class="p-4">
                     <h3 class="font-semibold text-slate-900 truncate mb-1">{{ $p->name }}</h3>
@@ -55,7 +86,7 @@
                         <a href="{{ route('admin.products.edit', $p) }}" class="btn-outline flex-1 justify-center btn-sm">
                             <i class="fa-solid fa-pen-to-square mr-1"></i>Edit
                         </a>
-                        <form action="{{ route('admin.products.destroy', $p) }}" method="POST" 
+                        <form action="{{ route('admin.products.destroy', $p) }}" method="POST"
                               onsubmit="return confirm('Delete this product?')">
                             @csrf
                             @method('DELETE')
@@ -81,4 +112,25 @@
         </div>
     </div>
 @endif
+
+<script>
+    function dismissToast(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.transition = 'opacity 0.3s ease';
+            el.style.opacity = '0';
+            setTimeout(() => el.remove(), 300);
+        }
+    }
+
+    // Auto-dismiss after 4 seconds
+    document.addEventListener('DOMContentLoaded', function () {
+        ['toast-success', 'toast-error'].forEach(function (id) {
+            const el = document.getElementById(id);
+            if (el) {
+                setTimeout(() => dismissToast(id), 4000);
+            }
+        });
+    });
+</script>
 @endsection

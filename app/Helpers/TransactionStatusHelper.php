@@ -73,6 +73,24 @@ class TransactionStatusHelper
                 'bg_class' => 'bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400',
                 'badge_class' => 'badge-danger',
             ],
+            'returned' => [
+                'label' => 'Returned',
+                'description' => 'Pesanan dikembalikan',
+                'icon' => 'undo',
+                'icon_fa' => 'fa-rotate-left',
+                'color' => 'orange',
+                'bg_class' => 'bg-orange-100 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400',
+                'badge_class' => 'badge-warning',
+            ],
+            'refunded' => [
+                'label' => 'Refunded',
+                'description' => 'Pembayaran dikembalikan',
+                'icon' => 'refund',
+                'icon_fa' => 'fa-money-bill-transfer',
+                'color' => 'teal',
+                'bg_class' => 'bg-green-100 text-teal-600 dark:bg-teal-500/20 dark:text-teal-400',
+                'badge_class' => 'badge-info',
+            ],
         ];
     }
 

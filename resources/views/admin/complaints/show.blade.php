@@ -1,119 +1,188 @@
 @extends('layouts.admin')
 
+@section('page-title', 'Review Complaint')
+
 @section('content')
-<div class="sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-    <div class="mb-6">
-        <a href="{{ route('admin.complaints.index') }}" class="text-sm font-medium text-slate-500 hover:text-slate-600 mb-2 inline-block">
-            &lt;- Kembali ke Daftar Komplain
-        </a>
-        <h1 class="text-2xl md:text-3xl text-slate-800 font-bold">Review Komplain #CMP-{{ str_pad($complaint->id, 4, '0', STR_PAD_LEFT) }}</h1>
+<!-- Header -->
+<div class="flex items-center gap-4 mb-6">
+    <a href="{{ route('admin.complaints.index') }}" class="btn btn-ghost btn-sm">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+    <div>
+        <h2 class="text-xl font-bold text-slate-900">Review Complaint #CMP-{{ str_pad($complaint->id, 4, '0', STR_PAD_LEFT) }}</h2>
+        <p class="text-sm text-slate-500 mt-1">Customer complaint details and approval panel</p>
     </div>
+</div>
 
-    @if($errors->any())
-        <div class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-6">
+<!-- Errors -->
+@if($errors->any())
+    <div class="card border-red-200 bg-red-50 p-4 mb-6">
+        <ul class="list-disc list-inside text-red-600 text-sm space-y-1">
             @foreach($errors->all() as $error)
-                <p>{{ $error }}</p>
+                <li>{{ $error }}</li>
             @endforeach
-        </div>
-    @endif
+        </ul>
+    </div>
+@endif
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Informasi Komplain -->
-        <div class="md:col-span-2 space-y-6">
-            <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
-                <h2 class="text-lg font-semibold text-slate-800 mb-4 border-b pb-2">Detail Pengajuan User</h2>
-                <div class="grid grid-cols-2 gap-4 mb-4">
+<!-- Main Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Main Content -->
+    <div class="lg:col-span-2 space-y-6">
+        <!-- Complaint Details Card -->
+        <div class="card">
+            <div class="p-6 border-b border-slate-200">
+                <h3 class="font-semibold text-slate-900">
+                    <i class="fa-solid fa-file-lines mr-2 text-slate-400"></i>Complaint Details
+                </h3>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <p class="text-sm text-slate-500">Tipe Solusi</p>
-                        <p class="font-medium text-slate-800">{{ $complaint->action_type == 'refund' ? 'Pengembalian Dana (Refund)' : 'Penukaran Barang' }}</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Solution Type</p>
+                        <p class="font-medium text-slate-900 mt-2">
+                            {{ $complaint->action_type == 'refund' ? 'Refund' : 'Replacement' }}
+                        </p>
                     </div>
                     <div>
-                        <p class="text-sm text-slate-500">Alasan</p>
-                        <p class="font-medium text-slate-800">{{ $complaint->reason_category }}</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Reason</p>
+                        <p class="font-medium text-slate-900 mt-2">{{ $complaint->reason_category }}</p>
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <p class="text-sm text-slate-500 mb-1">Deskripsi Masalah</p>
-                    <div class="bg-slate-50 p-3 rounded border text-slate-800">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase mb-2">Description</p>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-slate-800">
                         {{ $complaint->description }}
                     </div>
                 </div>
 
                 @if($complaint->evidence_images)
                 <div>
-                    <p class="text-sm text-slate-500 mb-2">Foto Bukti Keluhan</p>
-                    <a href="{{ Storage::url($complaint->evidence_images) }}" target="_blank">
-                        <img src="{{ Storage::url($complaint->evidence_images) }}" class="rounded border max-w-sm hover:opacity-75 transition" alt="Bukti">
+                    <p class="text-xs font-semibold text-slate-500 uppercase mb-2">Evidence Image</p>
+                    <a href="{{ Storage::url($complaint->evidence_images) }}" target="_blank" class="inline-block">
+                        <img src="{{ Storage::url($complaint->evidence_images) }}"
+                             class="rounded-lg border border-slate-200 max-w-sm hover:opacity-90 transition object-cover"
+                             alt="Evidence">
                     </a>
                 </div>
                 @endif
             </div>
+        </div>
 
-            <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
-                <h2 class="text-lg font-semibold text-slate-800 mb-4 border-b pb-2">Informasi Kontak & Refund</h2>
+        <!-- Contact & Refund Info Card -->
+        <div class="card">
+            <div class="p-6 border-b border-slate-200">
+                <h3 class="font-semibold text-slate-900">
+                    <i class="fa-solid fa-wallet mr-2 text-slate-400"></i>Contact & Refund Information
+                </h3>
+            </div>
+            <div class="p-6 space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <p class="text-sm text-slate-500">Nomor HP/WhatsApp</p>
-                        <p class="font-medium text-slate-800">{{ $complaint->contact_number }}</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Phone / WhatsApp</p>
+                        <p class="font-medium text-slate-900 mt-2">{{ $complaint->contact_number }}</p>
                     </div>
                     @if($complaint->action_type == 'refund')
                     <div>
-                        <p class="text-sm text-slate-500">Tujuan Pengembalian Dana</p>
-                        <p class="font-medium text-slate-800 mb-1">Metode: {{ $complaint->refund_method ?? '-' }}</p>
-                        <p class="font-medium text-slate-800">No/Akun: {{ $complaint->refund_account ?? '-' }}</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Refund Method</p>
+                        <p class="font-medium text-slate-900 mt-2">{{ $complaint->refund_method ?? '-' }}</p>
                     </div>
                     @endif
                 </div>
+                @if($complaint->action_type == 'refund')
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase">Account / Number</p>
+                    <p class="font-mono font-medium text-slate-900 mt-2">{{ $complaint->refund_account ?? '-' }}</p>
+                </div>
+                @endif
             </div>
         </div>
+    </div>
 
-        <!-- Action Panel -->
-        <div>
-            <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6 sticky top-6">
-                <h2 class="text-lg font-semibold text-slate-800 mb-4 border-b pb-2">Admin Panel Approval</h2>
-                
-                <div class="mb-4">
-                    <p class="text-sm text-slate-500 mb-1">Status Komplain Saat Ini:</p>
-                    <span class="text-sm font-medium px-3 py-1 rounded-full bg-slate-100 text-slate-800">
+    <!-- Sidebar - Admin Panel -->
+    <div class="lg:col-span-1">
+        <!-- Approval Panel -->
+        <div class="card sticky top-6">
+            <div class="p-6 border-b border-slate-200">
+                <h3 class="font-semibold text-slate-900">
+                    <i class="fa-solid fa-gavel mr-2 text-slate-400"></i>Admin Panel
+                </h3>
+            </div>
+            <div class="p-6">
+                <!-- Current Status -->
+                <div class="mb-6">
+                    <p class="text-xs font-semibold text-slate-500 uppercase mb-2">Current Status</p>
+                    <span class="badge badge-secondary">
+                        <i class="fa-solid fa-circle text-xs mr-1"></i>
                         {{ ucfirst($complaint->status) }}
                     </span>
                 </div>
 
-                <form action="{{ route('admin.complaints.action', $complaint->id) }}" method="POST">
+                <!-- Action Form -->
+                <form action="{{ route('admin.complaints.action', $complaint->id) }}" method="POST" class="space-y-4">
                     @csrf
-                    
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Pilih Keputusan Kepada User:</label>
-                        <select name="status" class="form-select w-full" required>
-                            <option value="">-- Pilih --</option>
-                            <option value="approved" {{ $complaint->status == 'approved' ? 'selected' : '' }}>Approve (Setujui Permintaan)</option>
-                            <option value="rejected" {{ $complaint->status == 'rejected' ? 'selected' : '' }}>Reject (Tolak Komplain)</option>
-                            <option value="resolved" {{ $complaint->status == 'resolved' ? 'selected' : '' }}>Resolved (Sudah Selesai/Tuntas)</option>
+
+                    <div>
+                        <label for="status" class="text-sm font-semibold text-slate-900">
+                            Decision
+                        </label>
+                        <select id="status"
+                                name="status"
+                                class="input w-full mt-2"
+                                required>
+                            <option value="">-- Select Action --</option>
+                            <option value="approved" {{ $complaint->status == 'approved' ? 'selected' : '' }}>
+                                Approve (Accept Request)
+                            </option>
+                            <option value="rejected" {{ $complaint->status == 'rejected' ? 'selected' : '' }}>
+                                Reject (Deny Complaint)
+                            </option>
+                            <option value="resolved" {{ $complaint->status == 'resolved' ? 'selected' : '' }}>
+                                Resolved (Completed)
+                            </option>
                         </select>
-                        <p class="text-xs text-slate-500 mt-2 block">
-                            *Jika di-Approve, status pesanan otomatis menjadi <strong>{{ $complaint->action_type == 'refund' ? 'Refunded' : 'Returning' }}</strong>.
+                        <p class="text-xs text-slate-500 mt-2">
+                            <i class="fa-solid fa-info-circle mr-1"></i>
+                            Approving will automatically set order status to <strong>{{ $complaint->action_type == 'refund' ? 'Refunded' : 'Returning' }}</strong>
                         </p>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Catatan Admin (Untuk User):</label>
-                        <textarea name="admin_notes" class="form-input w-full" rows="3" placeholder="Contoh: Kami sedang memproses dana Anda...">{{ $complaint->admin_notes }}</textarea>
+                    <div>
+                        <label for="admin_notes" class="text-sm font-semibold text-slate-900">
+                            Admin Notes (Visible to Customer)
+                        </label>
+                        <textarea id="admin_notes"
+                                  name="admin_notes"
+                                  rows="3"
+                                  placeholder="e.g., We are processing your refund..."
+                                  class="input w-full mt-2">{{ $complaint->admin_notes }}</textarea>
                     </div>
 
-                    <button type="submit" class="btn bg-primary-500 hover:bg-primary-600 text-white w-full">
-                        Simpan Keputusan & Update Status
+                    <button type="submit" class="btn btn-primary w-full">
+                        <i class="fa-solid fa-save"></i>Save Decision & Update
                     </button>
-                    <p class="text-xs text-slate-400 mt-2 text-center">User dapat melihat status dan catatan ini.</p>
                 </form>
+
+                <p class="text-xs text-slate-500 text-center mt-4">
+                    <i class="fa-solid fa-comment-dots mr-1"></i>Customer will see status and notes
+                </p>
             </div>
-            
-            <div class="bg-slate-50 shadow-sm rounded-sm border border-slate-200 p-4 mt-6">
-                <p class="text-sm font-medium text-slate-800 mb-2">Detail Referensi Pesanan Terkait</p>
-                <div class="text-xs text-slate-600 mb-2">Order ID: {{ $complaint->transaction->invoice_code }}</div>
-                <a href="{{ route('admin.transactions.show', $complaint->transaction->id) }}" class="btn border-slate-200 hover:border-slate-300 w-full">
-                    Lihat Histori Transaksi Asli
-                </a>
+        </div>
+
+        <!-- Related Order Card -->
+        <div class="card mt-6 border-slate-200">
+            <div class="p-6 border-b border-slate-200">
+                <h3 class="font-semibold text-slate-900">
+                    <i class="fa-solid fa-receipt mr-2 text-slate-400"></i>Related Order
+                </h3>
+            </div>
+            <div class="p-6 space-y-3">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase">Invoice</p>
+                    <p class="font-mono font-medium text-slate-900 mt-1">{{ $complaint->transaction->invoice_code }}</p>
+                </div>
+               
             </div>
         </div>
     </div>

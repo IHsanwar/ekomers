@@ -70,7 +70,7 @@
                         <div class="md:col-span-2">
                             <p class="text-sm text-slate-500 mb-1">Status</p>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $statusConfig['bg_class'] }}">
-                                <span class="material-icons-round text-xs mr-1.5">{{ $statusConfig['icon'] }}</span>
+                                <i class="fa-solid {{ $statusConfig['icon_fa'] }} text-xs mr-1.5"></i>
                                 {{ $statusConfig['label'] }}
                             </span>
                         </div>

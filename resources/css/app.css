@@ -217,12 +217,12 @@
     }
 
     .toast {
-        @apply pointer-events-auto flex items-center gap-3 w-full p-4 rounded-lg border shadow-elevated bg-white 
+        @apply pointer-events-auto flex items-center gap-3 w-full p-4 rounded-lg border shadow-elevated
                animate-slideInRight transition-all duration-300;
     }
 
     .toast-success {
-        @apply toast border-emerald-200 bg-emerald-50;
+        @apply border-emerald-200 bg-emerald-50;
     }
 
     .toast-success .toast-icon {
@@ -230,7 +230,7 @@
     }
 
     .toast-error {
-        @apply toast border-red-200 bg-red-50;
+        @apply border-red-200 bg-red-50;
     }
 
     .toast-error .toast-icon {
@@ -238,7 +238,7 @@
     }
 
     .toast-warning {
-        @apply toast border-amber-200 bg-amber-50;
+        @apply border-amber-200 bg-amber-50;
     }
 
     .toast-warning .toast-icon {
@@ -246,7 +246,7 @@
     }
 
     .toast-info {
-        @apply toast border-blue-200 bg-blue-50;
+        @apply border-blue-200 bg-blue-50;
     }
 
     .toast-info .toast-icon {
